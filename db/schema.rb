@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 2021_04_06_111701) do
 
   create_table "topics", force: :cascade do |t|
     t.string "title", null: false
+    t.text "description", null: false
     t.string "pro_con", null: false, array: true
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
