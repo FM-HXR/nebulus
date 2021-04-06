@@ -8,13 +8,14 @@
 
 ## DB, Model, API Controller
 
-- [ ] Entities
+- [ ] Entities & Migrations
 - [ ] Associations
 - [ ] Seeds
 - [ ] Set Routing
 - [ ] API & Page Controllers
 - [ ] Json Serialization
 - [ ] Testing on Insomnia
+- [ ] Validation
 
 ## Interface (Skeleton)
 
