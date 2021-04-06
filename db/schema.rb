@@ -10,10 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_06_100806) do
+ActiveRecord::Schema.define(version: 2021_04_06_111129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.string "text"
+    t.bigint "point_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["point_id"], name: "index_comments_on_point_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "points", force: :cascade do |t|
+    t.string "title", null: false
+    t.boolean "position", null: false
+    t.text "point", null: false
+    t.bigint "topic_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["topic_id"], name: "index_points_on_topic_id"
+    t.index ["user_id"], name: "index_points_on_user_id"
+  end
 
   create_table "topics", force: :cascade do |t|
     t.string "title", null: false
@@ -37,5 +59,9 @@ ActiveRecord::Schema.define(version: 2021_04_06_100806) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "comments", "points"
+  add_foreign_key "comments", "users"
+  add_foreign_key "points", "topics"
+  add_foreign_key "points", "users"
   add_foreign_key "topics", "users"
 end
