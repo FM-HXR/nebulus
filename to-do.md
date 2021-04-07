@@ -35,6 +35,7 @@
 - [ ] URL guard (move_to_index method in AJAX)
 - [ ] Non User limits & appearance.
 - [ ] Params Validation
+- [ ] Update Readme Table Design
 
 ## 3D implementation
 
