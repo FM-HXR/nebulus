@@ -11,11 +11,10 @@
 - [x] Entities & Migrations
 - [x] Associations
 - [x] Seeds
-- [ ] Set Routing
-- [ ] API & Page Controllers and CRUD actions
-- [ ] Json Serialization
-- [ ] Testing on Insomnia
-- [ ] Validation
+- [x] Json Serialization
+- [x] Set Routing
+- [x] API & Page Controllers and CRUD actions
+- [x] Testing on Insomnia
 
 ## Interface (Skeleton)
 
@@ -35,6 +34,7 @@
 - [ ] Authenticate user
 - [ ] URL guard (move_to_index method in AJAX)
 - [ ] Non User limits & appearance.
+- [ ] Params Validation
 
 ## 3D implementation
 
