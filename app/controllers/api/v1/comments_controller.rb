@@ -8,7 +8,16 @@ module Api
         if comment.save
           render json: CommentSerializer.new(comment).serialized_json
         else
-          render json: {comment.errors.full_messages}, status: 422
+          render json: {error: comment.errors.full_messages}, status: 422
+        end
+      end
+
+      def update
+        comment = Comment.find(params[:id])
+        if comment.update(comment_params)
+          render json: CommentSerializer.new(comment).serialized_json
+        else
+          render json: {error: comment.errors.full_messages}, status: 422
         end
       end
       
@@ -17,13 +26,13 @@ module Api
         if comment.destroy
           head :no_content
         else
-          render json: {comment.errors.full_messages}, status: 422
+          render json: {error: comment.errors.full_messages}, status: 422
         end
       end
 
       private
       def comment_params
-        params.require(:topic).permit(:text)
+        params.require(:comment).permit(:text, :point_id, :user_id)
       end
     end
   end
