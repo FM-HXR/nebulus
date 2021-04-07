@@ -2,7 +2,7 @@ module Api
   module V1
     class TopicsController < ApplicationController
       protect_from_forgery with: :null_session
-      
+
       def top
       end
       
