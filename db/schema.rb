@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 2021_04_06_111701) do
   create_table "points", force: :cascade do |t|
     t.string "title", null: false
     t.boolean "position", null: false
-    t.text "point", null: false
+    t.text "argument", null: false
     t.bigint "topic_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false

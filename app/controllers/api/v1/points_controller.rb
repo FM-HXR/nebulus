@@ -37,7 +37,7 @@ module Api
       
       private
       def point_params
-        params.require(:topic).permit(:title, :position, :point)
+        params.require(:point).permit(:title, :position, :argument, :topic_id, :user_id)
       end
 
       # Called as a method so not @options but options.

@@ -38,7 +38,7 @@ topics.each do |topic|
     hash = {}
     hash[:title] = "Cake roll chocolate_#{i}." 
     hash[:position] = true
-    hash[:point] = "Cursus arcu arcu luctus sapien lacinia lectus eu finibus. 
+    hash[:argument] = "Cursus arcu arcu luctus sapien lacinia lectus eu finibus. 
                     Felis sed proin sollicitudin amet duis vulputate quis cursus pulvinar. 
                     Duis arcu ultricies fusce rutrum sed lorem. Dui fusce amet ipsum hendrerit fermentum leo ut. 
                     Ipsum eu felis nec sit cursus ipsum dui quam bibendum vulputate. Mauris donec leo mauris eu bibendum. 
@@ -55,7 +55,7 @@ topics.each do |topic|
     hash = {}
     hash[:title] = "Cake roll chocolate_#{i}." 
     hash[:position] = false
-    hash[:point] = "Cursus arcu arcu luctus sapien lacinia lectus eu finibus. 
+    hash[:argument] = "Cursus arcu arcu luctus sapien lacinia lectus eu finibus. 
                     Felis sed proin sollicitudin amet duis vulputate quis cursus pulvinar. 
                     Duis arcu ultricies fusce rutrum sed lorem. Dui fusce amet ipsum hendrerit fermentum leo ut. 
                     Ipsum eu felis nec sit cursus ipsum dui quam bibendum vulputate. Mauris donec leo mauris eu bibendum. 
