@@ -22,7 +22,8 @@ while i <= 10
  hash = {}
  hash[:title] = "Cake roll chocolate_#{i}." 
  hash[:description] = "Beef ball prosciutto shank leberkas pork beef leberkas filet andouille mignon venison."
- hash[:pro_con] = ["pro", "con"]
+ hash[:pro] = "pro"
+ hash[:con] = "con"
  hash[:user] = users.first
  topic_list << hash
  i += 1
