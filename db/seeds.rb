@@ -18,7 +18,7 @@ users = User.create([
 
 i = 1
 topic_list = []
-while i <= 10
+while i <= 20
  hash = {}
  hash[:title] = "Cake roll chocolate_#{i}." 
  hash[:description] = "Beef ball prosciutto shank leberkas pork beef leberkas filet andouille mignon venison."
@@ -31,6 +31,43 @@ end
 
 topics = Topic.create(topic_list)
 
+markdown = "
+# Lorem Ipsum
+### Argument:
+Mauris amet rutrum elit elit proin in mauris sit arcu dui  
+tempus. Dui leo felis sollicitudin at fringilla nunc duis  
+sapien. Orci sapien cursus sapien volutpat hendrerit fusce  
+maecenas. Amet ut magna sapien non. Lectus duis arcu  
+aliquam sit donec id tempus maecenas nunc rutrum nunc.  
+Ultricies non consectetur arcu donec fusce sed at lorem  
+]lacinia. Mauris amet ut sit ligula lacinia. Arcu arcu  
+finibus magna cursus cursus eu dolor sapien maximus ipsum  
+leo. Eu donec nec pulvinar cursus. Fringilla leo quam\
+~~sagittis lorem adipiscing vulputate.~~  
+
+- [x] Checked_1
+- [ ] Unchecked
+
+www.google.com
+
+### Conclusion:
+Mauris amet rutrum elit elit proin in mauris sit arcu dui  
+tempus. Dui leo felis sollicitudin at fringilla nunc duis  
+sapien. Orci sapien cursus sapien volutpat hendrerit fusce  
+maecenas. Amet ut magna sapien non. Lectus duis arcu  
+aliquam sit donec id tempus maecenas nunc rutrum nunc.  
+Ultricies non consectetur arcu donec fusce sed at lorem  
+lacinia. Mauris amet ut sit ligula lacinia. Arcu arcu  
+finibus magna cursus cursus eu dolor sapien maximus ipsum  
+leo. Eu donec nec pulvinar cursus. Fringilla leo quam  
+sagittis lorem adipiscing vulputate.  
+
+A table:
+ 
+| a | b |
+| - | - |s
+"
+
 points_list = []
 topics.each do |topic|
   i = 1
@@ -38,12 +75,8 @@ topics.each do |topic|
     hash = {}
     hash[:title] = "Cake roll chocolate_#{i}." 
     hash[:position] = true
-    hash[:argument] = "Cursus arcu arcu luctus sapien lacinia lectus eu finibus. 
-                    Felis sed proin sollicitudin amet duis vulputate quis cursus pulvinar. 
-                    Duis arcu ultricies fusce rutrum sed lorem. Dui fusce amet ipsum hendrerit fermentum leo ut. 
-                    Ipsum eu felis nec sit cursus ipsum dui quam bibendum vulputate. Mauris donec leo mauris eu bibendum. 
-                    Vulputate lacinia amet sed duis. Luctus sit elit lorem in fusce tempus at fusce aliquam amet. 
-                    Sapien non interdum fusce purus convallis magna non ut. Fusce felis posuere lacinia sed. Sapien maecenas arcu leo cursus varius et."
+    hash[:markdown] = true
+    hash[:argument] = markdown
     hash[:topic] = topic
     hash[:user] = users.second
     points_list << hash
@@ -55,12 +88,8 @@ topics.each do |topic|
     hash = {}
     hash[:title] = "Cake roll chocolate_#{i}." 
     hash[:position] = false
-    hash[:argument] = "Cursus arcu arcu luctus sapien lacinia lectus eu finibus. 
-                    Felis sed proin sollicitudin amet duis vulputate quis cursus pulvinar. 
-                    Duis arcu ultricies fusce rutrum sed lorem. Dui fusce amet ipsum hendrerit fermentum leo ut. 
-                    Ipsum eu felis nec sit cursus ipsum dui quam bibendum vulputate. Mauris donec leo mauris eu bibendum. 
-                    Vulputate lacinia amet sed duis. Luctus sit elit lorem in fusce tempus at fusce aliquam amet. 
-                    Sapien non interdum fusce purus convallis magna non ut. Fusce felis posuere lacinia sed. Sapien maecenas arcu leo cursus varius et."
+    hash[:markdown] = true
+    hash[:argument] = markdown
     hash[:topic] = topic
     hash[:user] = users.second
     points_list << hash
