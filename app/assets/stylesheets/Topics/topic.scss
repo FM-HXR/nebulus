@@ -1,0 +1,278 @@
+$points-v: 2;
+$points-h: 5;
+
+$textShadowL: -2px 6px 2px
+  rgba(
+    $color: #000000,
+    $alpha: 1,
+  );
+$textShadowR: 2px 6px 2px
+  rgba(
+    $color: #000000,
+    $alpha: 1,
+  );
+
+$textShadow: 0px 6px 2px
+  rgba(
+    $color: #000000,
+    $alpha: 1,
+  );
+
+.topic-shell {
+  height: 95vh;
+  width: 100vw;
+  background-image: url("https://cdn.wallpapersafari.com/76/36/NYExkS.jpg");
+
+  display: grid;
+  grid-template-columns: 30vw 40vw 30vw;
+  grid-template-rows: repeat(8, 1fr);
+
+  .topic-head {
+    width: fit-content;
+    height: fit-content;
+    grid-row: 3 / span 3;
+    grid-column: 2;
+    justify-self: center;
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+
+    .topic-title {
+      height: fit-content;
+      width: fit-content;
+      max-width: 60ch;
+      margin-bottom: 2em;
+      text-align: center;
+      font-family: "quicksand";
+      font-size: 2em;
+      color: white;
+      padding: 5px;
+      background-color: rgba($color: #a5a5a5, $alpha: 0.3);
+      border-radius: 5px;
+      box-shadow: 0 0px 10px 3px rgba($color: #ffffff, $alpha: 0.5);
+      opacity: 0;
+      animation: regularFade 0.5s forwards;
+    }
+
+    .topic-description {
+      height: fit-content;
+      width: fit-content;
+      max-width: 80ch;
+      text-align: center;
+      font-family: "quicksand";
+      font-size: 1.5em;
+      color: white;
+      padding: 5px 0 5px 0;
+      background-color: rgba($color: #a5a5a5, $alpha: 0.3);
+      border-radius: 5px;
+      box-shadow: 0 0px 10px 3px rgba($color: #ffffff, $alpha: 0.5);
+      opacity: 0;
+      animation: regularFade 0.5s forwards;
+    }
+  }
+
+  .add-point {
+    font-size: 5em;
+    color: white;
+    grid-row: 2;
+    grid-column: 2;
+    width: fit-content;
+    height: fit-content;
+    justify-self: center;
+    transition: color 0.3s;
+    opacity: 0;
+    animation: regularFade 0.5s forwards;
+  }
+
+  .add-point:hover {
+    color: #9b9b9b;
+  }
+
+  .add-point:active {
+    text-shadow: 0 0 10px rgba($color: #9cfff2, $alpha: 1);
+  }
+
+  @keyframes regularFade {
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .pro-shell,
+  .con-shell {
+    min-width: 10vw;
+    width: 100%;
+    height: 95vh;
+    grid-row: 1 / span 7;
+    display: grid;
+    gap: 0.3em;
+    background-color: rgba($color: #000000, $alpha: 1);
+    box-sizing: border-box;
+  }
+
+  .pro-shell {
+    grid-column: 1;
+    border-right: 5px solid rgba($color: #311aff, $alpha: 1);
+    border-left: 5px solid rgba($color: #311aff, $alpha: 1);
+    .pro {
+      width: fit-content;
+      height: fit-content;
+      color: white;
+      font-weight: bold;
+      font-size: 1.5em;
+      padding: 10px;
+    }
+  }
+
+  .con-shell {
+    grid-column: 3;
+    border-left: 5px solid rgba($color: #ff1a1a, $alpha: 1);
+    border-right: 5px solid rgba($color: #ff1a1a, $alpha: 1);
+    .con {
+      color: white;
+      font-weight: bold;
+      font-size: 1.5em;
+      padding: 10px;
+    }
+  }
+
+  .pro-container,
+  .con-container {
+    overflow-y: scroll;
+    display: grid;
+    border-top: 0.1em solid rgba($color: #ffffff, $alpha: 0.5);
+    background-color: rgba($color: #464646, $alpha: 0.3);
+  }
+
+  .pro-container::-webkit-scrollbar {
+    width: 8px;
+    height: 30px;
+    background-image: linear-gradient(0deg, red 0%, blue 50%, red 100%);
+  }
+
+  .con-container::-webkit-scrollbar {
+    width: 8px;
+    height: 30px;
+    background-image: linear-gradient(0deg, blue 0%, red 50%, blue 100%);
+  }
+
+  .pro-container::-webkit-scrollbar-thumb,
+  .con-container::-webkit-scrollbar-thumb {
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    border-radius: 10px;
+  }
+
+  .point {
+    font-family: "quicksand";
+    min-width: min-content;
+    width: 35ch;
+    max-width: 45ch;
+    justify-self: center;
+    padding: 1em;
+    margin: 2em;
+    background-color: rgba($color: #dadada, $alpha: 0.3);
+    box-shadow: 0px 5px 10px 3px rgba($color: #b3b3b3, $alpha: 0.8);
+    border-radius: 10px;
+
+    .point-title {
+      font-size: 1.3em;
+      font-weight: bold;
+
+      a {
+        text-decoration: none;
+        text-shadow: $textShadow;
+        color: rgb(103, 255, 103);
+      }
+    }
+
+    .point-user {
+      color: lime;
+      text-shadow: $textShadow;
+      font-size: 1.1em;
+    }
+
+    .point-date {
+      color: lime;
+      text-shadow: $textShadow;
+      font-size: 1.1em;
+    }
+  }
+
+  $defSeconds: 0.1s;
+  @for $item from 0 through 100 {
+    .pro-#{$item},
+    .con-#{$item} {
+      $weight: $defSeconds * ($item + 1);
+      opacity: 0;
+      transform: scale(0.5);
+      animation: pointFade $weight forwards;
+    }
+  }
+
+  @keyframes pointFade {
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .point-form-shell {
+    z-index: 10;
+    width: 100%;
+    height: fit-content;
+    margin-top: 10px;
+    grid-row: 1 / span 8;
+    grid-column: 2;
+    align-self: start;
+    display: flex;
+
+    background-color: rgba($color: #ffffff, $alpha: 1);
+
+    .point-form {
+      margin: 30px;
+      height: 580px;
+      width: 100%;
+      background-color: rgba($color: #8b8b8b, $alpha: 1);
+      display: grid;
+      grid-template-rows: 50px 35px 400px 95px;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-flow: row;
+
+      .point-form-title {
+        grid-row: 1;
+        grid-column: 1 / span 3;
+        resize: none;
+      }
+
+      .point-form-position,
+      .point-form-format {
+        grid-row: 2;
+        justify-self: center;
+        width: fit-content;
+        height: min-content;
+        display: grid;
+      }
+
+      .see-desc {
+        grid-row: 2;
+        width: fit-content;
+        height: fit-content;
+        justify-self: center;
+        align-self: center;
+      }
+
+      .point-form-argument {
+        grid-row: 3;
+        grid-column: 1 / span 3;
+        resize: none;
+      }
+
+      .point-submit {
+        grid-row: 4;
+        grid-column: 1 / span 3;
+      }
+    }
+  }
+}
