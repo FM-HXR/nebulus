@@ -1,6 +1,6 @@
 class PointSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :title, :position, :argument, :topic, :user
+  attributes :title, :position, :markdown, :argument, :created_at, :updated_at, :topic, :user
 
   belongs_to :user
   belongs_to :topic

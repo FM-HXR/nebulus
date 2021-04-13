@@ -2,6 +2,7 @@ module Api
   module V1
     class PointsController < ApplicationController
       protect_from_forgery with: :null_session
+      before_action :get_topic, only: [:create]
 
       def show
         point = Point.find(params[:id])
@@ -9,7 +10,7 @@ module Api
       end
 
       def create
-        point = Point.new(point_params)
+        point = @topic.points.new(point_params)
         if point.save
           render json: PointSerializer.new(point).serialized_json
         else
@@ -36,8 +37,13 @@ module Api
       end
       
       private
+
+      def get_topic
+        @topic = Topic.find(params[:topic_id])
+      end
+    
       def point_params
-        params.require(:point).permit(:title, :position, :argument, :topic_id, :user_id)
+        params.require(:point).permit(:title, :position, :markdown, :argument, :topic_id).merge(user_id: current_user.id)
       end
 
       # Called as a method so not @options but options.
