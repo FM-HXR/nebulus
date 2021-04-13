@@ -2,9 +2,11 @@ module Api
   module V1
     class CommentsController < ApplicationController
       protect_from_forgery with: :null_session
+      before_action :get_point, only: [:create]
       
       def create
-        comment = Comment.new(comment_params)
+        comment = @point.comments.new(comment_params)
+        binding.pry
         if comment.save
           render json: CommentSerializer.new(comment).serialized_json
         else
@@ -31,8 +33,12 @@ module Api
       end
 
       private
+      def get_point
+        @point = Point.find(params[:point_id])
+      end
+
       def comment_params
-        params.require(:comment).permit(:text, :point_id, :user_id)
+        params.require(:comment).permit(:text, :point_id).merge(user_id: current_user.id)
       end
     end
   end

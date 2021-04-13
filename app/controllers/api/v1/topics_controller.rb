@@ -2,12 +2,12 @@ module Api
   module V1
     class TopicsController < ApplicationController
       protect_from_forgery with: :null_session
-      
+
       def top
       end
       
       def index
-        topics = Topic.includes(:user)
+        topics = Topic.includes(:user).limit(16)
         render json: TopicSerializer.new(topics, options).serialized_json
       end
 
@@ -52,7 +52,7 @@ module Api
 
       private
       def topic_params
-        params.require(:topic).permit(:title, :description, :pro, :con, :user_id)
+        params.require(:topic).permit(:title, :description, :pro, :con).merge(user_id: current_user.id)
       end
 
       def options

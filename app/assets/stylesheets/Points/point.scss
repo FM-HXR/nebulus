@@ -1,0 +1,10 @@
+.point-shell {
+  min-height: 95vh;
+  max-height: auto;
+  width: 100vw;
+  background-image: url("https://cdn.wallpapersafari.com/76/36/NYExkS.jpg");
+  background-size: auto 130%;
+  display: grid;
+  grid-template-columns: 10vw 60vw 30vw;
+  grid-template-rows: repeat(auto, 1fr);
+}

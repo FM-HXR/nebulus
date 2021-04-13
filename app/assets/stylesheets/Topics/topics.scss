@@ -1,0 +1,305 @@
+$topics-v: 2;
+$topics-v-hops: 4;
+
+$topics-h: 5;
+$topics-h-hops: 3;
+
+.topics-shell {
+  min-height: 95vh;
+  max-height: auto;
+  width: 100vw;
+  background-image: url("https://cdn.wallpapersafari.com/76/36/NYExkS.jpg");
+  background-size: auto 130%;
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  grid-template-rows: repeat(auto, 1fr);
+
+  .topics-loading {
+    color: #ffffff;
+    font-size: 2em;
+    grid-column: 8 / span 1;
+    grid-row: 1;
+    justify-self: center;
+    align-self: center;
+  }
+
+  .topic-center {
+    width: fit-content;
+    height: fit-content;
+    grid-column: 8 / span 1;
+    grid-row: 3 / span 6;
+    margin: 50px 10px 0 10px;
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .topics-title {
+    color: white;
+    filter: blur(0.3px);
+    font-family: "nazalization";
+    font-size: 5em;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    grid-row: 1 / span 2;
+    transform: translateY(50px);
+    opacity: 0;
+    animation: titleFade 0.5s forwards;
+  }
+
+  .add-topic {
+    font-size: 4em;
+    text-align: center;
+    color: #ffffff;
+    grid-row: 2;
+    transition: color 0.3s;
+    margin-top: 20px;
+    transform: translateY(50px);
+    opacity: 0;
+    animation: titleFade 1s forwards;
+  }
+
+  .add-topic:hover {
+    color: #9b9b9b;
+  }
+
+  .add-topic:active {
+    text-shadow: 0 0 10px rgba($color: #9cfff2, $alpha: 1);
+  }
+
+  .topics {
+    height: fit-content;
+    width: fit-content;
+    grid-row: $topics-v / span 10;
+    justify-self: center;
+
+    display: grid;
+    gap: 0.5em;
+    margin-top: 50px;
+    box-sizing: border-box;
+  }
+
+  .one {
+    grid-column: $topics-h / span $topics-h-hops;
+  }
+
+  .two {
+    grid-column: ($topics-h + $topics-h-hops + 1) / span $topics-h-hops;
+  }
+
+  .topic-form-shell {
+    max-height: 650px;
+    width: 1vw;
+    grid-column: 1;
+    grid-row: 1 / span 6;
+    display: none;
+    grid-template-rows: repeat(3, 1fr);
+    justify-self: start;
+    background-color: rgba($color: #ffffff, $alpha: 0.2);
+    box-shadow: 0 0 10px rgba($color: #000000, $alpha: 1);
+
+    .close-new-topic {
+      width: 50px;
+      height: 50px;
+      font-size: 3em;
+      margin-top: 10px;
+      color: #ffffff;
+      grid-row: 1;
+      justify-self: end;
+      transition: color 0.3s;
+    }
+
+    .close-new-topic:hover {
+      color: #9b9b9b;
+    }
+
+    .close-new-topic:active {
+      text-shadow: 0 0 10px rgba($color: #9cfff2, $alpha: 1);
+    }
+
+    .topic-form-title,
+    .topic-form-description,
+    .topic-form-position,
+    .topic-submit,
+    .topic-form-title::placeholder,
+    .topic-form-description::placeholder,
+    .topic-form-position::placeholder {
+      font-family: "quicksand";
+      color: white;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    .topic-form-title::placeholder {
+      margin-top: 10px;
+    }
+
+    .topic-form {
+      height: 80%;
+      width: 1%;
+      opacity: 0;
+      justify-self: center;
+      align-self: center;
+      display: grid;
+      grid-template-rows: repeat(6, 1fr);
+    }
+
+    $input-background: rgba(
+      $color: #000000,
+      $alpha: 0.5,
+    );
+
+    $input-shadow: 0 0 10px
+      rgba(
+        $color: #ffffff,
+        $alpha: 0.5,
+      );
+
+    .topic-form-title {
+      max-height: 30px;
+      background-color: $input-background;
+      box-shadow: $input-shadow;
+      border-radius: 5px;
+      border: none;
+      grid-row: 1;
+      grid-column: 1 / span 2;
+      resize: none;
+      padding: 30px 20px 20px 20px;
+    }
+
+    .topic-form-description {
+      height: 150px;
+      background-color: $input-background;
+      box-shadow: $input-shadow;
+      border-radius: 5px;
+      padding: 20px;
+      border: none;
+      grid-row: 2 / span 2;
+      grid-column: 1 / span 2;
+      resize: none;
+    }
+
+    .topic-form-position {
+      width: 150px;
+      height: 10px;
+      background-color: $input-background;
+      box-shadow: $input-shadow;
+      border-radius: 5px;
+      padding: 20px;
+      border: none;
+      grid-row: 4 / span 2;
+      align-self: center;
+      justify-self: center;
+    }
+
+    .topic-submit {
+      height: 80px;
+      background-color: $input-background;
+      box-shadow: $input-shadow;
+      border-radius: 5px;
+      border: none;
+      grid-row: 6;
+      grid-column: 1 / span 2;
+      align-self: start;
+      font-size: 2em;
+    }
+  }
+}
+
+$defSeconds: 0.1s;
+@for $i from 0 through 16 {
+  $seconds: $defSeconds * ($i + 1);
+  .topic-#{$i} {
+    background-color: rgba($color: #c5c5c5, $alpha: 0.2);
+    box-shadow: 0 0 10px rgba($color: #d8d8d8, $alpha: 0.8);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 1em;
+    height: fit-content;
+    max-width: fit-content;
+    min-width: min-content;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    transform: matrix(0.1, 0, 0, 0.1, 0, 50);
+    opacity: 0;
+    animation: fadeIn $seconds forwards;
+    transition: background-color 0.2s;
+
+    a,
+    .topic-user-#{$i},
+    .topic-date-#{$i} {
+      font-family: "quicksand";
+    }
+
+    a {
+      font-weight: bolder;
+      text-decoration: none;
+      color: rgb(103, 255, 103);
+      text-shadow: 0 6px 2px rgba($color: #000000, $alpha: 1);
+      font-size: 1.5em;
+    }
+
+    .topic-user-#{$i} {
+      color: lime;
+      font-size: 1.2em;
+      text-shadow: 0 6px 2px rgba($color: #000000, $alpha: 1);
+    }
+
+    .topic-date-#{$i} {
+      color: lime;
+      font-size: 1.2em;
+      text-shadow: 0 6px 2px rgba($color: #000000, $alpha: 1);
+    }
+  }
+
+  .topic-#{$i}:hover {
+    background-color: rgba($color: #e7e7e7, $alpha: 0.3);
+  }
+}
+
+.formAnim {
+  animation-name: formFade;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.formAnim-internal {
+  animation-name: formFade-2;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+  100% {
+    transform: matrix(1, 0, 0, 1, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes titleFade {
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes formFade {
+  100% {
+    width: 500px;
+  }
+}
+
+@keyframes formFade-2 {
+  100% {
+    opacity: 1;
+    width: 80%;
+  }
+
+  95% {
+    width: 80%;
+  }
+}

@@ -1,0 +1,19 @@
+!!!
+%html
+  %head
+    %title Nebulus
+    %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', media: 'all'
+    = javascript_pack_tag 'application'
+    %link{:href => "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", :rel => "stylesheet"}/
+  %header
+    - unless user_signed_in? 
+      = link_to "Sign In", new_user_session_path, class: "header-link in-out"
+      = link_to "Sign Up", new_user_registration_path, class: "header-link up"
+    - else
+      = link_to "Sign Out", destroy_user_session_path, method: :delete, class: "header-link in-out"
+      = link_to "#{@user.username}", root_path, class: "header-link user"
+  %body
+    = yield
