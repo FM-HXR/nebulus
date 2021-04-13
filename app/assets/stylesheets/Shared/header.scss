@@ -1,0 +1,33 @@
+header {
+  min-height: 5vh;
+  height: auto;
+  width: 100vw;
+  background-color: black;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  .header-link {
+    color: white;
+    font-size: 2em;
+    font-family: "quicksand";
+    text-shadow: 0 5px 3px rgba($color: #adadad, $alpha: 0.7);
+    align-self: center;
+    text-decoration: none;
+  }
+
+  .in-out {
+    grid-column: 2;
+    margin-right: 10px;
+    justify-self: end;
+  }
+
+  .up {
+    grid-column: 3;
+    margin-left: 10px;
+  }
+
+  .user {
+    grid-column: 3;
+    margin-left: 10px;
+  }
+}
