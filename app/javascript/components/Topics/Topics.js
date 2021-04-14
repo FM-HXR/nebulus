@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Redirect, Link } from "react-router-dom";
 import ReactDOM from "react-dom";
-import FontAwesome from "react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusSquare, faTimes } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { csrfToken } from "@rails/ujs";
 import LoadingBar from "react-top-loading-bar";
@@ -56,15 +57,16 @@ const Topics = () => {
   });
 
   const topicCount = topics.length;
+  const topicHalf = Math.floor(topicCount / 2) - 1;
 
   const listOne = [];
   const listTwo = [];
 
-  for (var i = 0; i <= 7; i++) {
+  for (var i = 0; i <= topicHalf; i++) {
     listOne.push(list[i]);
   }
 
-  for (var i = 8; i <= 15; i++) {
+  for (var i = topicHalf + 1; i <= topicCount - 1; i++) {
     listTwo.push(list[i]);
   }
 
@@ -135,8 +137,8 @@ const Topics = () => {
       <div className="topic-center">
         <h1 className="topics-title">TOPICS</h1>
         {loginStatus === "true" && (
-          <FontAwesome
-            name="plus-square"
+          <FontAwesomeIcon
+            icon={faPlusSquare}
             onClick={handleClickOne}
             className="add-topic"
           />
@@ -146,9 +148,8 @@ const Topics = () => {
       <div className="topics two">{loaded && listTwo}</div>
 
       <div className="topic-form-shell">
-        <FontAwesome
-          tag="i"
-          name="times"
+        <FontAwesomeIcon
+          icon={faTimes}
           onClick={handleClickTwo}
           className="close-new-topic"
         />

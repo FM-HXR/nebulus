@@ -48,7 +48,8 @@ $topics-h-hops: 3;
   }
 
   .add-topic {
-    font-size: 4em;
+    width: 60px;
+    height: 60px;
     text-align: center;
     color: #ffffff;
     grid-row: 2;
@@ -88,7 +89,7 @@ $topics-h-hops: 3;
   }
 
   .topic-form-shell {
-    max-height: 650px;
+    max-height: 700px;
     width: 1vw;
     grid-column: 1;
     grid-row: 1 / span 6;
@@ -99,10 +100,9 @@ $topics-h-hops: 3;
     box-shadow: 0 0 10px rgba($color: #000000, $alpha: 1);
 
     .close-new-topic {
-      width: 50px;
-      height: 50px;
-      font-size: 3em;
-      margin-top: 10px;
+      width: 30px;
+      height: 30px;
+      margin: 10px;
       color: #ffffff;
       grid-row: 1;
       justify-self: end;
@@ -130,10 +130,6 @@ $topics-h-hops: 3;
       font-weight: bold;
     }
 
-    .topic-form-title::placeholder {
-      margin-top: 10px;
-    }
-
     .topic-form {
       height: 80%;
       width: 1%;
@@ -156,7 +152,7 @@ $topics-h-hops: 3;
       );
 
     .topic-form-title {
-      max-height: 30px;
+      height: 50px;
       background-color: $input-background;
       box-shadow: $input-shadow;
       border-radius: 5px;
@@ -164,7 +160,8 @@ $topics-h-hops: 3;
       grid-row: 1;
       grid-column: 1 / span 2;
       resize: none;
-      padding: 30px 20px 20px 20px;
+      padding: 30px 20px 0 20px;
+      margin-bottom: 30px;
     }
 
     .topic-form-description {
@@ -207,10 +204,10 @@ $topics-h-hops: 3;
 }
 
 $defSeconds: 0.1s;
-@for $i from 0 through 16 {
+@for $i from 0 through 100 {
   $seconds: $defSeconds * ($i + 1);
   .topic-#{$i} {
-    background-color: rgba($color: #c5c5c5, $alpha: 0.2);
+    background-color: rgba($color: #000000, $alpha: 0.4);
     box-shadow: 0 0 10px rgba($color: #d8d8d8, $alpha: 0.8);
     border-radius: 5px;
     padding: 10px;
@@ -236,21 +233,21 @@ $defSeconds: 0.1s;
     a {
       font-weight: bolder;
       text-decoration: none;
-      color: rgb(103, 255, 103);
-      text-shadow: 0 6px 2px rgba($color: #000000, $alpha: 1);
+      color: white;
+      text-shadow: 0 6px 5px rgba($color: #cfcfcf, $alpha: 0.4);
       font-size: 1.5em;
     }
 
     .topic-user-#{$i} {
-      color: lime;
+      color: white;
       font-size: 1.2em;
-      text-shadow: 0 6px 2px rgba($color: #000000, $alpha: 1);
+      text-shadow: 0 6px 5px rgba($color: #cfcfcf, $alpha: 0.4);
     }
 
     .topic-date-#{$i} {
-      color: lime;
+      color: white;
       font-size: 1.2em;
-      text-shadow: 0 6px 2px rgba($color: #000000, $alpha: 1);
+      text-shadow: 0 6px 5px rgba($color: #cfcfcf, $alpha: 0.4);
     }
   }
 
