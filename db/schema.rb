@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_06_111701) do
+ActiveRecord::Schema.define(version: 2021_04_16_121123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,12 +58,25 @@ ActiveRecord::Schema.define(version: 2021_04_06_111701) do
     t.boolean "position", null: false
     t.boolean "markdown", null: false
     t.text "argument", null: false
+    t.integer "bright", default: 0, null: false
+    t.integer "dim", default: 0, null: false
+    t.integer "dark", default: 0, null: false
     t.bigint "topic_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["topic_id"], name: "index_points_on_topic_id"
     t.index ["user_id"], name: "index_points_on_user_id"
+  end
+
+  create_table "ratings", force: :cascade do |t|
+    t.string "rate_name", null: false
+    t.bigint "user_id", null: false
+    t.bigint "point_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["point_id"], name: "index_ratings_on_point_id"
+    t.index ["user_id"], name: "index_ratings_on_user_id"
   end
 
   create_table "topics", force: :cascade do |t|
@@ -96,5 +109,7 @@ ActiveRecord::Schema.define(version: 2021_04_06_111701) do
   add_foreign_key "comments", "users"
   add_foreign_key "points", "topics"
   add_foreign_key "points", "users"
+  add_foreign_key "ratings", "points"
+  add_foreign_key "ratings", "users"
   add_foreign_key "topics", "users"
 end

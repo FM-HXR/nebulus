@@ -77,6 +77,9 @@ topics.each do |topic|
     hash[:position] = true
     hash[:markdown] = true
     hash[:argument] = markdown
+    hash[:bright] = 0
+    hash[:dim] = 0
+    hash[:dark] = 0
     hash[:topic] = topic
     hash[:user] = users.second
     points_list << hash
@@ -114,5 +117,14 @@ end
 
 comments = Comment.create(comments_list)
 
+# ratings_list = []
+# points.each do |point|
+#   hash = {}
+#   hash[:rate] = [0, 1, 0]
+#   hash[:point] = point
+#   hash[:user] = user.first
+#   ratings_list << hash
+# end
 
+# ratings = Rating.create(ratings_list)
 
