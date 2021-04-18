@@ -1,30 +1,30 @@
 module Api
   module V1
-    class CommentsController < ApplicationController
+    class RatingsController < ApplicationController
       protect_from_forgery with: :null_session
       before_action :get_point, only: [:create]
-      
+
       def create
-        comment = @point.comments.new(comment_params)
-        if comment.save
-          render json: CommentSerializer.new(comment).serialized_json
+        rating = @point.ratings.new(rating_params)
+        if rating.save
+          render json: RatingSerializer.new(rating).serialized_json
         else
           render json: {error: comment.errors.full_messages}, status: 422
         end
       end
 
       def update
-        comment = Comment.find(params[:id])
-        if comment.update(comment_params)
-          render json: CommentSerializer.new(comment).serialized_json
+        rating = Rating.find(params[:id])
+        if rating.update(rating_params)
+          render json: RatingSerializer.new(rating).serialized_json
         else
           render json: {error: comment.errors.full_messages}, status: 422
         end
       end
-      
+
       def destroy
-        comment = Comment.find(params[:id])
-        if comment.destroy
+        rating = Rating.find(params[:id])
+        if rating.destroy
           head :no_content
         else
           render json: {error: comment.errors.full_messages}, status: 422
@@ -36,8 +36,9 @@ module Api
         @point = Point.find(params[:point_id])
       end
 
-      def comment_params
-        params.require(:comment).permit(:text, :point_id).merge(user_id: current_user.id)
+      def rating_params
+        # params.require(:rating).permit(:rate, :point_id, :user_id)
+        params.require(:rating).permit(:rate_name, :point_id).merge(user_id: current_user.id)
       end
     end
   end

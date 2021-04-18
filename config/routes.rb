@@ -15,6 +15,7 @@ Rails.application.routes.draw do
      end
      resources :points, only: [:create, :update, :destroy, :show]
      resources :comments, only: [:create, :update, :destroy]
+     resources :ratings, only: [:create, :update, :destroy]
     end
   end
 

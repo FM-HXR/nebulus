@@ -7,7 +7,7 @@ module Api
       end
       
       def index
-        topics = Topic.includes(:user).limit(16)
+        topics = Topic.includes(:user)
         render json: TopicSerializer.new(topics, options).serialized_json
       end
 
@@ -45,9 +45,11 @@ module Api
       end
 
       def search
+        # get request
       end
 
       def random
+        # get request
       end
 
       private
