@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusSquare, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlusSquare,
+  faTrashAlt,
+  faPenSquare,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
@@ -16,8 +21,8 @@ const Topic = (props) => {
   const [progress, setProgress] = useState(0);
 
   const userPresence = document.querySelector(".user-presence");
-  let loginStatus = userPresence.getAttribute("data-user");
-  // console.log("Props: ", props);
+  const loginStatus = userPresence.getAttribute("data-user");
+  const loginId = userPresence.getAttribute("data-id");
 
   useEffect(() => {
     // Get Topic
@@ -38,12 +43,6 @@ const Topic = (props) => {
         console.log((resp) => console.log("Catch Response: ", resp));
       });
   }, [points.length]);
-
-  // loaded ? console.log(topic.data.attributes.title) : console.log("No");
-
-  // loaded && points[0].attributes.position === true
-  //   ? console.log("Pro")
-  //   : console.log("No");
 
   const proPoint = [];
   const conPoint = [];
@@ -109,6 +108,7 @@ const Topic = (props) => {
     );
   });
 
+  // -------------------------- New Point Handlers --------------------------
   const handleChange = (e) => {
     e.preventDefault();
     setPoint(Object.assign({}, point, { [e.target.name]: e.target.value }));
@@ -139,6 +139,58 @@ const Topic = (props) => {
       .catch((resp) => console.log(resp));
   };
 
+  // -------------------------- Edit/Delete Topic Handlers --------------------------
+
+  const handleEditChange = (e) => {
+    e.preventDefault();
+    setTopic(Object.assign({}, topic, { [e.target.name]: e.target.value }));
+    console.log("Edited Topic: ", topic);
+  };
+
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+
+    const csrfToken = document.querySelector("[name=csrf-token]").content;
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
+
+    const topic_id = topic.data.id;
+    const editForm = document.querySelector(".topic-form");
+    const penIcon = document.querySelector(".topic-edit");
+
+    axios
+      .patch(`/api/v1/topics/${topic_id}`, { topic })
+      .then((resp) => {
+        console.log(resp);
+        setTopic(resp.data);
+        editForm.classList.remove("formContent");
+        editForm.style.display = "none";
+        penIcon.style.display = null;
+      })
+      .catch((resp) => {
+        console.log(resp);
+      });
+  };
+
+  const handleTopicDelete = (e) => {
+    e.preventDefault();
+
+    const csrfToken = document.querySelector("[name=csrf-token]").content;
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
+
+    const topic_id = topic.data.id;
+
+    axios
+      .delete(`/api/v1/topics/${topic_id}`)
+      .then((resp) => {
+        console.log(resp);
+        window.location = "/topics";
+      })
+      .catch((resp) => {
+        console.log(resp);
+      });
+  };
+
+  // -------------------------- New Point Form Animations --------------------------
   const showForm = (e) => {
     e.preventDefault();
 
@@ -180,19 +232,23 @@ const Topic = (props) => {
   };
 
   const closeForm = (e) => {
+    e.preventDefault();
+
     const close = document.querySelector(".close-form");
     const back = document.querySelector(".return-form");
     const titleField = document.getElementById("title");
     const argumentField = document.getElementById("argument");
     const plus = document.querySelector(".add-point");
 
-    setFormOpen(true);
+    setFormOpen(false);
     titleField.value = "";
     argumentField.value = "";
     plus.style.display = "flex";
     back.style.display = "none";
     close.style.display = "none";
   };
+
+  // -------------------------- Markdown Preview Action --------------------------
 
   const openPreview = (e) => {
     e.preventDefault();
@@ -208,9 +264,60 @@ const Topic = (props) => {
     preview.style.display = "none";
   };
 
+  // -------------------------- Edit/Delete Topic Form/Warning Animation ----------------------
+
+  const showEditForm = (e) => {
+    e.preventDefault();
+    const editForm = document.querySelector(".topic-form");
+    const formPro = document.getElementById("pro");
+    const formCon = document.getElementById("con");
+    const penIcon = document.querySelector(".topic-edit");
+
+    penIcon.style.display = "none";
+
+    formPro.value = topic.data.attributes.pro;
+    formCon.value = topic.data.attributes.con;
+
+    editForm.style.display = "grid";
+    editForm.classList.add("formContent");
+  };
+
+  const closeEditForm = (e) => {
+    e.preventDefault();
+    const editForm = document.querySelector(".topic-form");
+    const penIcon = document.querySelector(".topic-edit");
+
+    editForm.classList.remove("formContent");
+    editForm.style.display = "none";
+    penIcon.style.display = null;
+  };
+
+  const showWarning = (e) => {
+    e.preventDefault();
+    const warning = document.querySelector(".delete-warning");
+    const trashIcon = document.querySelector(".topic-delete");
+
+    trashIcon.style.display = "none";
+    warning.style.display = "grid";
+    warning.classList.add("formContent");
+  };
+
+  const closeWarning = (e) => {
+    e.preventDefault();
+    const warning = document.querySelector(".delete-warning");
+    const trashIcon = document.querySelector(".topic-delete");
+
+    trashIcon.style.display = null;
+    warning.style.display = "none";
+    warning.classList.remove("formContent");
+  };
+
+  // -------------------------- Vars For Components --------------------------
+
   const charCountTit = document.getElementById("title");
   const charCountArg = document.getElementById("argument");
 
+  // -------------------------- Component ------------------------------------
   return (
     loaded && (
       <div className="topic-shell">
@@ -222,11 +329,14 @@ const Topic = (props) => {
           onLoaderFinished={() => setProgress(0)}
         />
 
+        {/* Topic Content/Info */}
         <div className="topic-head">
           <h2 className="topic-title">{topic.data.attributes.title}</h2>
           <p className="topic-description">
             {topic.data.attributes.description}
           </p>
+
+          {/* Re-display or Close Point Form */}
           <button className="return-form" onClick={showForm}>
             Show Form
           </button>
@@ -235,14 +345,32 @@ const Topic = (props) => {
           </button>
         </div>
 
-        {loginStatus === "true" && (
-          <FontAwesomeIcon
-            icon={faPlusSquare}
-            onClick={showForm}
-            className="add-point"
-          />
-        )}
+        {/* Edit/Delete Topic & Add Point Options */}
+        <div className="options-shell">
+          {loginStatus === "true" && (
+            <FontAwesomeIcon
+              icon={faPlusSquare}
+              onClick={showForm}
+              className="add-point"
+            />
+          )}
+          {topic.data.attributes.user.id == loginId && (
+            <FontAwesomeIcon
+              icon={faPenSquare}
+              className="topic-edit"
+              onClick={showEditForm}
+            />
+          )}
+          {topic.data.attributes.user.id == loginId && (
+            <FontAwesomeIcon
+              icon={faTrashAlt}
+              className="topic-delete"
+              onClick={showWarning}
+            />
+          )}
+        </div>
 
+        {/* Pro & Con Points Section */}
         <div className="pro-shell">
           <p className="pro">{topic.data.attributes.pro}</p>
           <div className="pro-container">{pros}</div>
@@ -317,6 +445,8 @@ const Topic = (props) => {
             Post
           </button>
         </form>
+
+        {/* Markdown Preview Window */}
         <div className="preview-shell">
           <FontAwesomeIcon
             icon={faTimes}
@@ -328,6 +458,73 @@ const Topic = (props) => {
               {charCountArg.value}
             </ReactMarkdown>
           )}
+        </div>
+
+        {/* Edit Topic Form */}
+        <form
+          className="topic-form"
+          onSubmit={handleEditSubmit}
+          id="edit-content"
+        >
+          <textarea
+            name="title"
+            maxLength="200"
+            placeholder="Topic Title: Max Char Length 200"
+            onChange={handleEditChange}
+            className="topic-form-title"
+            id="title"
+          >
+            {topic.data.attributes.title}
+          </textarea>
+
+          <textarea
+            name="description"
+            maxLength="500"
+            placeholder="Describe Topic: Max Char Length 500"
+            onChange={handleEditChange}
+            className="topic-form-description"
+            id="description"
+          >
+            {topic.data.attributes.description}
+          </textarea>
+
+          <input
+            type="text"
+            name="pro"
+            maxLength="30"
+            placeholder="Pro Position Name"
+            onChange={handleEditChange}
+            className="topic-form-position"
+            id="pro"
+          />
+
+          <input
+            type="text"
+            name="con"
+            maxLength="30"
+            placeholder="Con Position Name"
+            onChange={handleEditChange}
+            className="topic-form-position"
+            id="con"
+          />
+
+          <button type="submit" className="topic-submit">
+            Post
+          </button>
+          <button className="close-edit-form" onClick={closeEditForm}>
+            Close
+          </button>
+        </form>
+
+        {/* Delete Warning */}
+        <div className="delete-warning">
+          <p>Sure?</p>
+          <button className="delete-topic" onClick={handleTopicDelete}>
+            Delete
+          </button>
+          <button className="cancel-delete" onClick={closeWarning}>
+            Cancel
+          </button>
         </div>
       </div>
     )

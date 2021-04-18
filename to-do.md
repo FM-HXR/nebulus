@@ -4,9 +4,9 @@
 
 ## Temp
 
-- [x] Post Topic
-- [x] Post Comment
-- [x] Detecting markdown for show point
+- [x] Edit & Delete
+  - [x] Comment
+  - [x] Topic
 
 ## Setup
 
@@ -39,39 +39,37 @@
 ## Styling & Model Viewer Implementation
 
 - [x] Styled the basic structure of each component.
-  - [ ] Post Point with attached images.
-  - [ ] Preview uploads as thumbnail via React
 - [x] Testing Markup display for points with React & ~~Redcarpet~~ React Markdown.
   - [x] Make sure to run rails db:reset after adding markdown point.
-- [ ] Added basic animation using SCSS.
+- [x] Added basic animation using SCSS.
 
 ## Touch ups #1
 
 - [ ] User sign up params permit (application controller)
 - [ ] Authenticate user
 - [ ] URL guard (move_to_index method in AJAX)
-- [ ] Non User limits & appearance.
+- [x] Non User limits & appearance.
 - [ ] Model Params Validation rules
   - [ ] Regular Expressions
   - [ ] Form Error Handling (modal window)
 - [ ] Update Readme Table Design
-- [ ] Code optimization for Js & Scss
+- [ ] Code optimization & component compartmentalization (forms, messages etc) for Js & Scss
 
 ## 3D implementation
 
 - [ ] Tested Model Viewer
 - [ ] Created Background CG Graphics and Assets
+  - [ ] Background 1920x1500?? (1920x1080 shrink size default)
+    - x2 images joined seamlessly for show point page.
+- [ ] Design Top page
 
 ## Extra Features (Not in order)
 
-- [ ] User Avatar
-- [ ] Uploaded image ref gallery component for points.
-- [ ] Category Logo for Topic widgets in Topics
-- [ ] Ratings for points & comments.
+- [x] Ratings for points
 - [ ] View count for topics & points.
 - [ ] Tags, topic_tag relations.
 - [ ] Category for topics.
-- [ ] User preference (in tags), user_tag relations??
+- [ ] Category Logo for Topic widgets in Topics
 - [ ] Search feature
   - [ ] Full text search
   - [ ] Multiple Tags Search
@@ -86,13 +84,23 @@
   - [ ] Most popular (total rate count)
 - Point (sort comments by Attributes)
   - [ ] Newest / oldest
+  - [ ] Most Viewed
   - [ ] Most popular (total rate count)
 - [ ] Multiple Filter for points for each side
+
   - [ ] Newest / oldest
   - [ ] Most Viewed
   - [ ] Most Rated (total rate count)
+
+- [ ] User Avatar
+  - [ ] Show Avatar & User within widget on Topic & Point page
+- [ ] User Page + Edit/Delete
+- [ ] User preference (in tags), user_tag relations??
+- [ ] 2 Factor Auth login
+- [ ] Enable Multiple Image Uploading for Point Form & preview thumb before posting.
+- [ ] Uploaded images gallery component/widget in point page.
 - [ ] Infinite loading for show topics
-- [ ] Load More component for points
+- [ ] "Load More" component for points
 - [ ] Referencing other points in other topics as a link in references section (in points).
 
 ## Deployment & AWS, S3

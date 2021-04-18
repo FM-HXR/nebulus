@@ -6,7 +6,6 @@ module Api
       
       def create
         comment = @point.comments.new(comment_params)
-        binding.pry
         if comment.save
           render json: CommentSerializer.new(comment).serialized_json
         else

@@ -45,9 +45,11 @@ module Api
       end
 
       def search
+        # get request
       end
 
       def random
+        # get request
       end
 
       private
