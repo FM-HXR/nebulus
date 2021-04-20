@@ -8,7 +8,7 @@ import Point from "../components/Point/Point";
 const App = () => {
   return (
     <Switch>
-      <Route exact path="/" component={Top} />
+      <Route exact path="/" component={Topics} />
       <Route exact path="/topics" component={Topics} />
       <Route exact path="/topics/:id" component={Topic} />
       <Route exact path="/points/:id" component={Point} />

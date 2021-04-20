@@ -808,31 +808,54 @@ const Point = (props) => {
         )}
 
         {/* Point Ratings */}
-        <div className="ratings">
-          <FontAwesomeIcon
-            icon={faLightbulb}
-            className="rate bright"
-            id="rate-bright"
-            onClick={setRatingOne}
-          />
+        {loginStatus === "true" ? (
+          <div className="ratings">
+            <FontAwesomeIcon
+              icon={faLightbulb}
+              className="rate bright"
+              id="rate-bright"
+              onClick={setRatingOne}
+            />
 
-          <FontAwesomeIcon
-            icon={faLightbulb}
-            className="rate dim"
-            id="rate-dim"
-            onClick={setRatingTwo}
-          />
-          <FontAwesomeIcon
-            icon={faLightbulb}
-            className="rate dark"
-            id="rate-dark"
-            onClick={setRatingThree}
-          />
+            <FontAwesomeIcon
+              icon={faLightbulb}
+              className="rate dim"
+              id="rate-dim"
+              onClick={setRatingTwo}
+            />
+            <FontAwesomeIcon
+              icon={faLightbulb}
+              className="rate dark"
+              id="rate-dark"
+              onClick={setRatingThree}
+            />
+            <p className="count bright">{pointShow.data.attributes.bright}</p>
+            <p className="count dim">{pointShow.data.attributes.dim}</p>
+            <p className="count dark">{pointShow.data.attributes.dark}</p>
+          </div>
+        ) : (
+          <div className="ratings">
+            <FontAwesomeIcon
+              icon={faLightbulb}
+              className="rate bright"
+              id="rate-bright"
+            />
 
-          <p className="count bright">{pointShow.data.attributes.bright}</p>
-          <p className="count dim">{pointShow.data.attributes.dim}</p>
-          <p className="count dark">{pointShow.data.attributes.dark}</p>
-        </div>
+            <FontAwesomeIcon
+              icon={faLightbulb}
+              className="rate dim"
+              id="rate-dim"
+            />
+            <FontAwesomeIcon
+              icon={faLightbulb}
+              className="rate dark"
+              id="rate-dark"
+            />
+            <p className="count bright">{pointShow.data.attributes.bright}</p>
+            <p className="count dim">{pointShow.data.attributes.dim}</p>
+            <p className="count dark">{pointShow.data.attributes.dark}</p>
+          </div>
+        )}
 
         {/* Comment Form */}
         {loginStatus === "true" && (

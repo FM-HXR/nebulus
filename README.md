@@ -1,5 +1,9 @@
 # README
 
+## Heroku Link
+
+https://nebulus-app.herokuapp.com/
+
 # Table Design
 
 ## users
@@ -13,19 +17,21 @@
 
 ### Association
 
-- has_many :items
+- has_many :topics
+- has_many :points
 - has_many :comments
-- has_many :orders
+- has_many :ratings
 
 ## topics
 
-| Column      | Type       | Options                   |
-| ----------- | ---------- | ------------------------- |
-| title       | string     | null: false               |
-| category_id | integer    | null: false (active hash) |
-| pro         | string     | null: false               |
-| con         | string     | null: false               |
-| user        | references | foreign_key: true         |
+| Column      | Type       | Options           |
+| ----------- | ---------- | ----------------- |
+| title       | string     | null: false       |
+| description | text       | null: false       |
+| category_id | integer    | null: false       |
+| pro         | string     | null: false       |
+| con         | string     | null: false       |
+| user        | references | foreign_key: true |
 
 ### Association
 
@@ -36,21 +42,24 @@
 
 ## points
 
-| Column     | Type       | Options                 |
-| ---------- | ---------- | ----------------------- |
-| title      | string     | null: false             |
-| position   | boolean    | null: false             |
-| main_point | text       | null: false             |
-| conclusion | text       | null: false             |
-| rating     | integer    | null: false array: true |
-| user       | references | foreign_key: true       |
-| topic      | references | foreign_key: true       |
+| Column   | Type       | Options           |
+| -------- | ---------- | ----------------- |
+| title    | string     | null: false       |
+| position | boolean    | null: false       |
+| argument | text       | null: false       |
+| bright   | integer    | null: false       |
+| dim      | integer    | null: false       |
+| dark     | integer    | null: false       |
+| user     | references | foreign_key: true |
+| topic    | references | foreign_key: true |
 
 ### Association
 
 - has_many :comments
+- has_many :ratings
 - belongs_to :user
 - belongs_to :topic
+- has_many_attached :images
 
 ## comments
 
@@ -59,6 +68,19 @@
 | text   | text       | null: false       |
 | user   | references | foreign_key: true |
 | point  | references | foreign_key: true |
+
+### Association
+
+- belongs_to :user
+- belongs_to :point
+
+## ratings
+
+| Column    | Type       | Options           |
+| --------- | ---------- | ----------------- |
+| rate_name | string     | null: false       |
+| user      | references | foreign_key: true |
+| point     | references | foreign_key: true |
 
 ### Association
 
@@ -90,7 +112,7 @@
 
 # Ruby Ver
 
-3.0.0
+3.0.1
 
 # Rails Ver
 
