@@ -15,22 +15,30 @@
   - [x] Test Deployment to Heroku
   - [x] Solve problem of fonts not reflecting on heroku
   - [x] Temporarily set top page to topics
-  - [ ] Writing Resume
-  - [ ] Create & manage alternate Recruitment Site Accounts (Green, Type, Wantedly)
 
 - ### 21st April
 
-  - [ ] Basic Title Logo (Link) in header
-  - [ ] Link in Point and Topic that leads to upper layer
-  - [ ] User Login, Sign Up modals
-  - [ ] Basic Touch Ups
-  - [ ] View count for topics & points.
-  - [ ] Tags, topic_tag relations.
-  - [ ] Category for topics.
-  - [ ] Category Logo for Topic widgets in Topics
-  - [ ] Search feature
-  - [ ] Full text search for topics
-  - [ ] Multiple Tags Search for topics
+  - ~14:00
+
+    - [ ] Writing Resume
+    - [ ] Create & manage alternate Recruitment Site Accounts (Green, Type, Wantedly)
+    - [ ] Notify CA
+
+  - 15:00~23:30
+
+    - [ ] Basic Title Logo (Link) in header
+    - [ ] Link in Point and Topic that leads to upper layer
+    - [ ] User Login, Sign Up modals
+    - [ ] Basic Touch Ups
+    - [ ] View count for topics & points.
+    - [ ] Tags, topic_tag relations.
+    - [ ] Category for topics.
+
+  - 00:00~03:00
+    - [ ] Category Logo for Topic widgets in Topics
+    - [ ] Search feature
+    - [ ] Full text search for topics
+    - [ ] Multiple Tags Search for topics
 
 - ### 22nd April
 
