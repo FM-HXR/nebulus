@@ -13,6 +13,7 @@
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.2.1",
+    "@react-three/fiber": "^6.0.16",
     "@types/react": "^17.0.3",
     "axios": "^0.21.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
@@ -25,6 +26,7 @@
     "react-router-dom": "^5.2.0",
     "react-top-loading-bar": "^2.0.1",
     "remark-gfm": "^1.0.0",
+    "three": "^0.127.0",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
