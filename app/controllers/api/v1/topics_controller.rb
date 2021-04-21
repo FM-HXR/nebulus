@@ -46,6 +46,8 @@ module Api
 
       def search
         # get request
+        topics = Topic.text_search(params[:query])
+        render json: TopicSerializer.new(topics, options).serialized_json
       end
 
       def random

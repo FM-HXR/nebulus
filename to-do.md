@@ -18,12 +18,6 @@
 
 - ### 21st April
 
-  - ~14:00
-
-    - [ ] Writing Resume
-    - [ ] Create & manage alternate Recruitment Site Accounts (Green, Type, Wantedly)
-    - [ ] Notify CA
-
   - 15:00~23:30
 
     - [ ] Basic Title Logo (Link) in header
@@ -33,6 +27,10 @@
     - [ ] View count for topics & points.
     - [ ] Tags, topic_tag relations.
     - [ ] Category for topics.
+
+    - [ ] Writing Resume
+    - [ ] Create & manage alternate Recruitment Site Accounts (Green, Type, Wantedly)
+    - [ ] Notify CA
 
   - 00:00~03:00
     - [ ] Category Logo for Topic widgets in Topics
