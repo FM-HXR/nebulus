@@ -11,7 +11,6 @@ import axios from "axios";
 import gfm from "remark-gfm";
 import LoadingBar from "react-top-loading-bar";
 import { cspNonce } from "@rails/ujs";
-import bulb from "../Point/lightbulb-solid.png";
 
 const Point = (props) => {
   // -------------------------- Use States --------------------------
