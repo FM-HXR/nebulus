@@ -1,5 +1,10 @@
 # README
 
+### Heroku Link
+
+https://nebulus-app.herokuapp.com/  
+(※ Chrome 推奨、現在 PC のみ対応。)
+
 # Table Design
 
 ## users
@@ -90,7 +95,7 @@
 
 # Ruby Ver
 
-3.0.0
+3.0.1
 
 # Rails Ver
 
