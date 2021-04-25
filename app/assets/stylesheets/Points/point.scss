@@ -49,7 +49,8 @@
   }
 
   .point-user,
-  .point-date {
+  .point-date,
+  .point-count {
     color: white;
     font-family: "quicksand";
     font-size: 1.3em;
@@ -311,6 +312,8 @@
 
   .comment-field,
   .comment-submit,
+  .new-comment-count,
+  .edit-comment-count,
   .cancel-edit,
   .comment-edit-submit {
     background-color: rgba($color: #000000, $alpha: 0.5);
@@ -327,7 +330,7 @@
   }
 
   .comment-field {
-    width: 70%;
+    width: 60%;
     height: 70px;
     resize: none;
     padding: 15px;
@@ -337,6 +340,15 @@
     width: 20%;
     height: 100px;
     margin-left: 10px;
+  }
+
+  .new-comment-count,
+  .edit-comment-count {
+    max-width: 10%;
+    min-width: fit-content;
+    padding: 0 3px 0 3px;
+    margin-left: 5px;
+    align-self: center;
   }
 
   .comment-edit-buttons {

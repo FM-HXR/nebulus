@@ -1,6 +1,8 @@
 class Topic < ApplicationRecord
   belongs_to :user
   has_many :points, dependent: :destroy
+  has_many :topic_tag_relations, dependent: :destroy
+  has_many :tags, through: :topic_tag_relations  
 
   include PgSearch
   pg_search_scope :search, against: [:title, :description],

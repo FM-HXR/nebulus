@@ -2,19 +2,33 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Redirect, Link } from "react-router-dom";
 import ReactDOM from "react-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusSquare, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlusSquare,
+  faTimes,
+  faQuestionCircle,
+  faCommentsDollar,
+  faLandmark,
+  faBook,
+  faIcons,
+  faAtom,
+  faAtlas,
+} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { csrfToken } from "@rails/ujs";
 import LoadingBar from "react-top-loading-bar";
 
 const Topics = () => {
+  // -------------------------- Use States --------------------------
   const [topics, setTopics] = useState([]);
   const [topic, setTopic] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [progress, setProgress] = useState(0);
-  const userPresence = document.querySelector(".user-presence");
-  let loginStatus = userPresence.getAttribute("data-user");
 
+  // -------------------------- User Detection --------------------------
+  const userPresence = document.querySelector(".user-presence");
+  const loginStatus = userPresence.getAttribute("data-user");
+
+  // -------------------------- Use Effect --------------------------
   useEffect(() => {
     // Get Topics from API
     // Get Login Boolean
@@ -26,26 +40,72 @@ const Topics = () => {
         setTopics(resp.data.data);
         setLoaded(true);
         setProgress(100);
-        // console.log(resp);
+
+        console.log("Resp Data: ", resp.data.data);
       })
       .catch((resp) => console.log(resp));
   }, [topics.length]);
 
+  // Misc, Economics & Finance, Politics & Society, Philosophy, Pop Culture, Science & Math, History
+  const icons = [
+    faQuestionCircle,
+    faCommentsDollar,
+    faLandmark,
+    faBook,
+    faIcons,
+    faAtom,
+    faAtlas,
+  ];
+
+  const options = [
+    "Misc",
+    "Economics",
+    "Politics",
+    "Philosophy",
+    "Pop Culture",
+    "Science & Math",
+    "History",
+  ];
+
+  const optionsList = options.map((item) => {
+    return (
+      <option
+        value={options.indexOf(item)}
+        key={`option-${options.indexOf(item)}`}
+      >
+        {item}
+      </option>
+    );
+  });
+
+  const loadBar = [];
+  for (var i = 1; i <= 5; i++) {
+    var bar = <div className={`loadbar-${i}`}></div>;
+    loadBar.push(bar);
+  }
+
   const list = topics.map((item) => {
     return (
       <ul className={`topic-${topics.indexOf(item)}`} key={`topic-${item.id}`}>
-        <li
+        <FontAwesomeIcon
+          icon={icons[item.attributes.category]}
+          className={`topic-icon-${topics.indexOf(item)}`}
+          key={`icon-${item.id}`}
+        />
+        <Link
+          to={`/topics/${item.id}`}
           className={`topic-title-${topics.indexOf(item)}`}
           key={`title-${item.id}`}
         >
-          <Link to={`/topics/${item.id}`}>{item.attributes.title}</Link>
-        </li>
-        <li
+          {item.attributes.title}
+        </Link>
+        <Link
+          to="#"
           className={`topic-user-${topics.indexOf(item)}`}
           key={item.attributes.user.username}
         >
           By: {item.attributes.user.username}
-        </li>
+        </Link>
         <li
           className={`topic-date-${topics.indexOf(item)}`}
           key={`topic-date-${item.id}`}
@@ -58,7 +118,6 @@ const Topics = () => {
 
   const topicCount = topics.length;
   const topicHalf = Math.floor(topicCount / 2) - 1;
-
   const listOne = [];
   const listTwo = [];
 
@@ -75,7 +134,7 @@ const Topics = () => {
 
     setTopic(Object.assign({}, topic, { [e.target.name]: e.target.value }));
 
-    // console.log("Topic: ", topic);
+    console.log("Topic: ", topic);
   };
 
   const handleSubmit = (e) => {
@@ -133,7 +192,8 @@ const Topics = () => {
         onLoaderFinished={() => setProgress(0)}
         className="load-bar"
       />
-      <p className="topics-loading">{loaded ? "" : "Loading..."}</p>
+      {loaded !== true && <div className="loading-shell">{loadBar}</div>}
+      {/* <p className="topics-loading">{loaded ? "" : "Loading..."}</p> */}
       <div className="topic-center">
         <h1 className="topics-title">TOPICS</h1>
         {loginStatus === "true" && (
@@ -188,6 +248,17 @@ const Topics = () => {
             className="topic-form-position"
             id="con"
           />
+          <div className="topic-form-category">
+            <p className="category-label">Category</p>
+            <select
+              name="category"
+              onChange={handleChange}
+              className="select-category"
+              id="select-c"
+            >
+              {optionsList}
+            </select>
+          </div>
           <button type="submit" className="topic-submit">
             Post
           </button>

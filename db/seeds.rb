@@ -15,7 +15,7 @@ users = User.create([
     username: "mr.comment"
   }
 ])
-
+r = Random.new
 i = 1
 topic_list = []
 while i <= 20
@@ -24,6 +24,8 @@ while i <= 20
  hash[:description] = "Beef ball prosciutto shank leberkas pork beef leberkas filet andouille mignon venison."
  hash[:pro] = "pro"
  hash[:con] = "con"
+ hash[:category] = r.rand(0...7)
+ hash[:views] = 0
  hash[:user] = users.first
  topic_list << hash
  i += 1
@@ -80,6 +82,7 @@ topics.each do |topic|
     hash[:bright] = 0
     hash[:dim] = 0
     hash[:dark] = 0
+    hash[:views] = 0
     hash[:topic] = topic
     hash[:user] = users.second
     points_list << hash
@@ -93,6 +96,10 @@ topics.each do |topic|
     hash[:position] = false
     hash[:markdown] = true
     hash[:argument] = markdown
+    hash[:bright] = 0
+    hash[:dim] = 0
+    hash[:dark] = 0
+    hash[:views] = 0
     hash[:topic] = topic
     hash[:user] = users.second
     points_list << hash
@@ -116,6 +123,30 @@ points.each do |point|
 end 
 
 comments = Comment.create(comments_list)
+
+tags_list = [
+  {
+    name: "US Politics"
+  },
+  {
+    name: "Stocks"
+  },
+  {
+    name: "Coding"
+  },
+  {
+    name: "Food"
+  },
+  {
+    name: "Dead Memes"
+  },
+  {
+    name: "Weird Porn"
+  }
+]
+
+tags = Tag.create(tags_list)
+
 
 # ratings_list = []
 # points.each do |point|

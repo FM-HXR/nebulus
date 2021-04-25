@@ -28,37 +28,38 @@ $textShadow: 0px 6px 5px
     align-items: center;
     margin-top: 10px;
 
-    .topic-title {
+    .topic-title,
+    .topic-description,
+    .topic-count {
       height: fit-content;
-      width: fit-content;
-      max-width: 60ch;
-      margin-bottom: 2em;
+      min-width: min-content;
+      max-width: 55ch;
+      // width: fit-content;
       text-align: center;
       font-family: "quicksand";
-      font-size: 2em;
       color: white;
-      padding: 5px;
-      background-color: rgba($color: #a5a5a5, $alpha: 0.3);
       border-radius: 5px;
+      background-color: rgba($color: #a5a5a5, $alpha: 0.3);
       box-shadow: 0 0px 10px 3px rgba($color: #ffffff, $alpha: 0.5);
       opacity: 0;
       animation: regularFade 0.5s forwards;
     }
 
+    .topic-title {
+      margin-bottom: 2em;
+      font-size: 2em;
+      padding: 5px;
+    }
+
     .topic-description {
-      height: fit-content;
-      width: fit-content;
-      max-width: 80ch;
-      text-align: center;
-      font-family: "quicksand";
       font-size: 1.5em;
-      color: white;
       padding: 5px 0 5px 0;
-      background-color: rgba($color: #a5a5a5, $alpha: 0.3);
-      border-radius: 5px;
-      box-shadow: 0 0px 10px 3px rgba($color: #ffffff, $alpha: 0.5);
-      opacity: 0;
-      animation: regularFade 0.5s forwards;
+    }
+
+    .topic-count {
+      font-size: 1.5em;
+      padding: 5px;
+      margin-bottom: 2em;
     }
   }
 
@@ -189,12 +190,8 @@ $textShadow: 0px 6px 5px
       }
     }
 
-    .point-user {
-      color: rgb(255, 255, 255);
-      text-shadow: $textShadow;
-      font-size: 1.1em;
-    }
-
+    .point-user,
+    .point-count,
     .point-date {
       color: rgb(255, 255, 255);
       text-shadow: $textShadow;

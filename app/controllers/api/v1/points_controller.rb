@@ -43,7 +43,7 @@ module Api
       end
     
       def point_params
-        params.require(:point).permit(:title, :position, :markdown, :argument, :bright, :dim, :dark, :topic_id).merge(user_id: current_user.id)
+        params.require(:point).permit(:title, :position, :markdown, :argument, :bright, :dim, :dark, :views, :topic_id).merge(user_id: current_user.id)
       end
 
       # Called as a method so not @options but options.

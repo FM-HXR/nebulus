@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     namespace :v1 do
      resources :topics do
         collection do 
+          post :add
+          delete :remove
           get :top
           get :search
           get :random
@@ -16,6 +18,7 @@ Rails.application.routes.draw do
      resources :points, only: [:create, :update, :destroy, :show]
      resources :comments, only: [:create, :update, :destroy]
      resources :ratings, only: [:create, :update, :destroy]
+     resources :tags, only: [:create]
     end
   end
 
