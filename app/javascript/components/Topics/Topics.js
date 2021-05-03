@@ -20,7 +20,13 @@ import LoadingBar from "react-top-loading-bar";
 const Topics = () => {
   // -------------------------- Use States --------------------------
   const [topics, setTopics] = useState([]);
-  const [topic, setTopic] = useState({});
+  const [topics_tag, setTopicsTag] = useState({});
+  const [tags, setTags] = useState([]);
+  const [searching, setSearching] = useState(false);
+  const [query, setQuery] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+  const [tagParams, setTagParams] = useState(false);
+  const [submitTags, setSubmitTags] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [progress, setProgress] = useState(0);
 
@@ -28,7 +34,7 @@ const Topics = () => {
   const userPresence = document.querySelector(".user-presence");
   const loginStatus = userPresence.getAttribute("data-user");
 
-  // -------------------------- Use Effect --------------------------
+  // -------------------------- Use Effect ------------------------------
   useEffect(() => {
     // Get Topics from API
     // Get Login Boolean
@@ -40,12 +46,22 @@ const Topics = () => {
         setTopics(resp.data.data);
         setLoaded(true);
         setProgress(100);
-
-        console.log("Resp Data: ", resp.data.data);
+        console.log("Topics resp: ", resp);
       })
       .catch((resp) => console.log(resp));
+
+    axios
+      .get("/api/v1/tags.json")
+      .then((resp) => {
+        setTags(resp.data.data);
+        console.log("Tags resp: ", resp);
+      })
+      .catch((resp) => {
+        console.log(resp);
+      });
   }, [topics.length]);
 
+  // -------------------------- Category Icons & Form Options -----------------------------------
   // Misc, Economics & Finance, Politics & Society, Philosophy, Pop Culture, Science & Math, History
   const icons = [
     faQuestionCircle,
@@ -58,6 +74,7 @@ const Topics = () => {
   ];
 
   const options = [
+    "--",
     "Misc",
     "Economics",
     "Politics",
@@ -78,17 +95,21 @@ const Topics = () => {
     );
   });
 
+  // -------------------------- Load Animation Bars -----------------------------------
+
   const loadBar = [];
   for (var i = 1; i <= 5; i++) {
     var bar = <div className={`loadbar-${i}`}></div>;
     loadBar.push(bar);
   }
 
+  // -------------------------- Set Topics --------------------------------------------
+
   const list = topics.map((item) => {
     return (
       <ul className={`topic-${topics.indexOf(item)}`} key={`topic-${item.id}`}>
         <FontAwesomeIcon
-          icon={icons[item.attributes.category]}
+          icon={icons[item.attributes.category - 1]}
           className={`topic-icon-${topics.indexOf(item)}`}
           key={`icon-${item.id}`}
         />
@@ -116,6 +137,8 @@ const Topics = () => {
     );
   });
 
+  // -------------------------- Split Topics to 2 columns --------------------------------------------
+
   const topicCount = topics.length;
   const topicHalf = Math.floor(topicCount / 2) - 1;
   const listOne = [];
@@ -129,12 +152,128 @@ const Topics = () => {
     listTwo.push(list[i]);
   }
 
+  // -------------------------- Add/Remove Tags Handler for Form --------------------------------------------
+
+  const addTagHandler = (e) => {
+    // Searching through existing tags with input
+    if (e.target.value !== "") {
+      const tagSearch = tags.filter((c) =>
+        c.attributes.name.toLowerCase().includes(e.target.value.toLowerCase())
+      );
+      console.log("Results: ", tagSearch);
+      setSearchResult(tagSearch);
+    } else if (e.target.value === "") {
+      console.log("No Results.");
+      setSearchResult([]);
+    }
+
+    var filter = submitTags.filter(
+      (c) => c.name === e.target.value.split(",")[0]
+    );
+    console.log("matches: ", filter);
+
+    // Adding tags via comma
+    if (e.key === ",") {
+      if (e.target.value !== "" && filter.length === 0) {
+        var tag = { name: e.target.value.split(",")[0] };
+
+        setSubmitTags([...submitTags, tag]);
+        setTagParams(true);
+        setSearchResult([]);
+
+        e.target.value = "";
+      } else {
+        setSearchResult([]);
+        e.target.value = "";
+      }
+    }
+  };
+
+  const removeTagHandler = (indexToRemove) => {
+    // Finding the tag that matches passed index No. and excluding it from submission list
+    setSubmitTags(submitTags.filter((c) => c !== submitTags[indexToRemove]));
+    setTagParams(true);
+  };
+
+  // Add tag from suggestions by click event
+  const addTagByClick = (tagName) => {
+    const tagInputField = document.querySelector(".tags-input");
+
+    var filter = submitTags.filter((c) => c.name === tagName);
+    console.log("matches: ", filter);
+
+    if (filter.length === 0) {
+      var tag = { name: tagName };
+      setSubmitTags([...submitTags, tag]);
+      setTagParams(true);
+    }
+    setSearchResult([]);
+    tagInputField.value = "";
+  };
+
+  // Adding tags to topics_tag param
+  if (tagParams === true) {
+    var tagParam = [];
+
+    submitTags.forEach((item) => {
+      tagParam.push(item.name);
+    });
+
+    setTopicsTag(Object.assign({}, topics_tag, { names: tagParam }));
+
+    setTagParams(false);
+    console.log("Tags: ", submitTags);
+    console.log("Topic Params: ", topics_tag);
+  }
+
+  // ----------------------------- Existing Tags List Generator --------------------------------------------
+
+  const tagSelection = searchResult.map((item) => {
+    return (
+      <li
+        className={`search-result ${item.id}`}
+        key={`result-${item.id}`}
+        onClick={() => addTagByClick(item.attributes.name)}
+      >
+        <span>{item.attributes.name}</span>
+      </li>
+    );
+  });
+
+  // ----------------------------- Added Tags List Generator --------------------------------------------
+
+  const tagList = submitTags.map((item) => {
+    return (
+      <li
+        key={item.name}
+        className={`newTag ${item.name}`}
+        data-name={item.name}
+      >
+        <span>{item.name}</span>
+        <FontAwesomeIcon
+          icon={faTimes}
+          className="delete-tag"
+          key={`close-${item.name}`}
+          data-name={item.name}
+          onClick={() => removeTagHandler(submitTags.indexOf(item))}
+        />
+      </li>
+    );
+  });
+
+  // ------------------------------ Topics Form Handlers --------------------------------------------
+
   const handleChange = (e) => {
     e.preventDefault();
 
-    setTopic(Object.assign({}, topic, { [e.target.name]: e.target.value }));
+    setTopicsTag(
+      Object.assign({}, topics_tag, {
+        [e.target.name]: e.target.value,
+        views: 0,
+      })
+    );
 
-    console.log("Topic: ", topic);
+    console.log("Topic Params: ", topics_tag);
   };
 
   const handleSubmit = (e) => {
@@ -144,20 +283,30 @@ const Topics = () => {
     axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
 
     axios
-      .post("/api/v1/topics", { topic })
+      .post("/api/v1/topics", { topics_tag })
       .then((resp) => {
         const titleField = document.getElementById("title");
         const descriptionField = document.getElementById("description");
         const proField = document.getElementById("pro");
         const conField = document.getElementById("con");
+        const categoryField = document.getElementById("select-c");
+
+        console.log(resp, resp.data.data);
 
         setTopics([...topics, resp.data.data]);
-        setTopic({ title: "", description: "", pro: "", con: "" });
-
+        setTopicsTag({
+          title: "",
+          description: "",
+          pro: "",
+          con: "",
+          category: 0,
+          names: [],
+        });
         titleField.value = "";
         descriptionField.value = "";
         proField.value = "";
         conField.value = "";
+        categoryField.value = 0;
 
         const newId = resp.data.data.id;
         window.location = `/topics/${newId}`;
@@ -183,6 +332,8 @@ const Topics = () => {
     topicForm.style.display = "none";
   };
 
+  // ----------------------------- Component ------------------------------------------
+
   return (
     <div className="topics-shell">
       <LoadingBar
@@ -192,21 +343,31 @@ const Topics = () => {
         onLoaderFinished={() => setProgress(0)}
         className="load-bar"
       />
-      {loaded !== true && <div className="loading-shell">{loadBar}</div>}
-      {/* <p className="topics-loading">{loaded ? "" : "Loading..."}</p> */}
-      <div className="topic-center">
-        <h1 className="topics-title">TOPICS</h1>
-        {loginStatus === "true" && (
-          <FontAwesomeIcon
-            icon={faPlusSquare}
-            onClick={handleClickOne}
-            className="add-topic"
-          />
-        )}
-      </div>
-      <div className="topics one">{loaded && listOne}</div>
-      <div className="topics two">{loaded && listTwo}</div>
 
+      {/* Loading Animation */}
+      {loaded !== true && <div className="loading-shell">{loadBar}</div>}
+
+      <div className="content-space">
+        {/* Title & Add Button */}
+        <div className="topic-center">
+          <h1 className="topics-title">TOPICS</h1>
+          {loginStatus === "true" && (
+            <FontAwesomeIcon
+              icon={faPlusSquare}
+              onClick={handleClickOne}
+              className="add-topic"
+            />
+          )}
+        </div>
+
+        {/* Topics Display */}
+        <div className="core-content">
+          <div className="topics one">{loaded && listOne}</div>
+          <div className="topics two">{loaded && listTwo}</div>
+        </div>
+      </div>
+
+      {/* New Topic Form */}
       <div className="topic-form-shell">
         <FontAwesomeIcon
           icon={faTimes}
@@ -258,6 +419,16 @@ const Topics = () => {
             >
               {optionsList}
             </select>
+          </div>
+          <div className="tags-field-shell">
+            <ul className="tagSpace">{tagList}</ul>
+            <input
+              type="text"
+              placeholder="Tags (Hit comma to add Tag)"
+              className="tags-input"
+              onKeyUp={addTagHandler}
+            />
+            <ul className="tag-search-result">{tagSelection}</ul>
           </div>
           <button type="submit" className="topic-submit">
             Post
