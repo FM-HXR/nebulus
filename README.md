@@ -18,19 +18,21 @@ https://nebulus-app.herokuapp.com/
 
 ### Association
 
-- has_many :items
+- has_many :topics
+- has_many :points
 - has_many :comments
-- has_many :orders
+- has_many :ratings
 
 ## topics
 
-| Column      | Type       | Options                   |
-| ----------- | ---------- | ------------------------- |
-| title       | string     | null: false               |
-| category_id | integer    | null: false (active hash) |
-| pro         | string     | null: false               |
-| con         | string     | null: false               |
-| user        | references | foreign_key: true         |
+| Column      | Type       | Options           |
+| ----------- | ---------- | ----------------- |
+| title       | string     | null: false       |
+| description | text       | null: false       |
+| category_id | integer    | null: false       |
+| pro         | string     | null: false       |
+| con         | string     | null: false       |
+| user        | references | foreign_key: true |
 
 ### Association
 
@@ -41,21 +43,24 @@ https://nebulus-app.herokuapp.com/
 
 ## points
 
-| Column     | Type       | Options                 |
-| ---------- | ---------- | ----------------------- |
-| title      | string     | null: false             |
-| position   | boolean    | null: false             |
-| main_point | text       | null: false             |
-| conclusion | text       | null: false             |
-| rating     | integer    | null: false array: true |
-| user       | references | foreign_key: true       |
-| topic      | references | foreign_key: true       |
+| Column   | Type       | Options           |
+| -------- | ---------- | ----------------- |
+| title    | string     | null: false       |
+| position | boolean    | null: false       |
+| argument | text       | null: false       |
+| bright   | integer    | null: false       |
+| dim      | integer    | null: false       |
+| dark     | integer    | null: false       |
+| user     | references | foreign_key: true |
+| topic    | references | foreign_key: true |
 
 ### Association
 
 - has_many :comments
+- has_many :ratings
 - belongs_to :user
 - belongs_to :topic
+- has_many_attached :images
 
 ## comments
 
@@ -64,6 +69,19 @@ https://nebulus-app.herokuapp.com/
 | text   | text       | null: false       |
 | user   | references | foreign_key: true |
 | point  | references | foreign_key: true |
+
+### Association
+
+- belongs_to :user
+- belongs_to :point
+
+## ratings
+
+| Column    | Type       | Options           |
+| --------- | ---------- | ----------------- |
+| rate_name | string     | null: false       |
+| user      | references | foreign_key: true |
+| point     | references | foreign_key: true |
 
 ### Association
 
@@ -117,4 +135,6 @@ turbolinks disabled
 
 Postgresql 13.0
 
-# ...
+# Front End
+
+React Js

@@ -56,7 +56,20 @@
 - [ ] And make a decision on which is a better method unless there's a usecase for both on the same page.
 - [ ] Implement and Deploy
 
-- [ ] Extra Features
+=======
+## Temp
+
+- [ ] Update README
+- [ ] Test Deployment to Heroku
+- [ ] Finishing Resume
+- [ ] Title Logo (Link)
+- [ ] change background to css generated background to avoid copyright
+- [ ] Link in Point and Topic that leads to upper layer
+- [ ] Solve problem of fonts not reflecting on heroku
+- [ ] User Login, Sign Up modals
+- [x] Temporarily set top page to topics
+
+- [ ] Basic Touch Ups
 
 ## Setup
 
@@ -93,7 +106,7 @@
   - [x] Make sure to run rails db:reset after adding markdown point.
 - [x] Added basic animation using SCSS.
 
-## Touch ups #1
+## Basic Touch ups
 
 - [ ] User sign up params permit (application controller)
 - [ ] Authenticate user
@@ -121,8 +134,8 @@
 - [ ] Category for topics.
 - [ ] Category Logo for Topic widgets in Topics
 - [ ] Search feature
-  - [ ] Full text search
-  - [ ] Multiple Tags Search
+  - [ ] Full text search for topics
+  - [ ] Multiple Tags Search for topics
 - [ ] Multiple Filters for...
 - Topics (Controller response based)
   - [ ] Newest / oldest

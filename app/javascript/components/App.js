@@ -9,7 +9,7 @@ import Search from "../components/Topics/Search";
 const App = () => {
   return (
     <Switch>
-      <Route exact path="/" component={Top} />
+      <Route exact path="/" component={Topics} />
       <Route exact path="/topics" component={Topics} />
       <Route exact path="/topics/search" component={Search} />
       <Route exact path="/topics/:id" component={Topic} />
