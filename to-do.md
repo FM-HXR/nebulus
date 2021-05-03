@@ -1,64 +1,60 @@
 # Dev procedures
 
-## Week 2
+### 3rd:
 
-## Temp
+- [x] Tagging feature for New Topics
+- [ ] Filtered Search Mode for Search Topics page
+  - Full Text (Autocomplete suggestions)
+  - Tags (Autocomplete suggestions)
+  - Genre
+  - Latest / Oldest
+  - Most Viewed
+  - Most Rated
+- [ ] Styling Search Page
+- [ ] Update ReadMe, learn how to write it effectively on Youtube.
+- [ ] Redesign theme starting with topics page and see how it goes.
+  - If it's viable, do it for the rest. If not, restore old design.
 
-- [x] Edit & Delete
+### 3rd
 
-  - [x] Comment
-  - [x] Topic
+- [x] Writing Resume (Good enough for assessment)
+- [x] Manage Green Account, create Doda, Type Account.
+- [ ] Apply for 10 companies via Green & others.
 
-- ### 20th April
+### 4th~
 
-  - [x] Update README
-  - [x] Test Deployment to Heroku
-  - [x] Solve problem of fonts not reflecting on heroku
-  - [x] Temporarily set top page to topics
+- [ ] Instant Filter Buttons / Drop Down Menu of Button (Filters) for Topics, Points & Comments
+  - Genre
+  - Latest / Oldest
+  - Most Viewed
+  - Most Rated
+- [ ] Image Upload and Display in Points (react-image-lightbox).
+- [ ] User Login popup form accessible from header. Syncronous.
+- [ ] User Tags & Profile Pic Feature
+- [ ] Styling User Related Pages.
+- [ ] Error Handling (Modal Prompts)
 
-- ### 21st April
+- [ ] 就活資料動画を視聴。
+- [ ] Apply for 20 companies
 
-  - 15:00~23:30
+### N/A
 
-    - [ ] Basic Title Logo (Link) in header
-    - [ ] Link in Point and Topic that leads to upper layer
-    - [ ] User Login, Sign Up modals
-    - [ ] Basic Touch Ups
-    - [ ] View count for topics & points.
-    - [ ] Tags, topic_tag relations.
-    - [ ] Category for topics.
-
-    - [ ] Writing Resume
-    - [ ] Create & manage alternate Recruitment Site Accounts (Green, Type, Wantedly)
-    - [ ] Notify CA
-
-  - 00:00~03:00
-    - [ ] Category Logo for Topic widgets in Topics
-    - [ ] Search feature
-    - [ ] Full text search for topics
-    - [ ] Multiple Tags Search for topics
-
-- ### 22nd April
-
-  - [ ] Sort & Organize Tuts Videos ("Tutorial Library (latest)" ← "2.8 & EEVEE Training Project")
-  - [ ] Relearn Blender 2.8 / 2.9 and create parametric, generative and seamless background graphics for website.
-  - [ ] Go through the Intro Playlist
-  - Some Plugins/Softwares:
-    - Jsplacement
-    - Sverchok
-    - Geometry Nodes
-    - Tissue
-    - By-Gen
-    - Nebula Generator
-  - [ ] Implement on project and deploy.
-
-- ### 23rd April
-
-  - [ ] Integrating 3D in React through 2 methods:
-    - [ ] Google model viewer
-    - [ ] React Three Fibre
-  - [ ] And make a decision on which is a better method unless there's a usecase for both on the same page.
-  - [ ] Implement and Deploy
+- [ ] Sort & Organize Tuts Videos ("Tutorial Library (latest)" ← "2.8 & EEVEE Training Project")
+- [ ] Relearn Blender 2.8 / 2.9 and create parametric, generative and seamless background graphics for website.
+- [ ] Go through the Intro Playlist
+- Some Plugins/Softwares:
+  - Jsplacement
+  - Sverchok
+  - Geometry Nodes
+  - Tissue
+  - By-Gen
+  - Nebula Generator
+- [ ] Implement on project and deploy.
+- [ ] Integrating 3D in React through 2 methods:
+  - [ ] Google model viewer
+  - [ ] React Three Fibre
+- [ ] And make a decision on which is a better method unless there's a usecase for both on the same page.
+- [ ] Implement and Deploy
 
 - [ ] Extra Features
 
