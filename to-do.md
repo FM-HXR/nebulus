@@ -1,5 +1,62 @@
 # Dev procedures
 
+### 3rd:
+
+- [x] Tagging feature for New Topics
+- [ ] Filtered Search Mode for Search Topics page
+  - Full Text (Autocomplete suggestions)
+  - Tags (Autocomplete suggestions)
+  - Genre
+  - Latest / Oldest
+  - Most Viewed
+  - Most Rated
+- [ ] Styling Search Page
+- [ ] Update ReadMe, learn how to write it effectively on Youtube.
+- [ ] Redesign theme starting with topics page and see how it goes.
+  - If it's viable, do it for the rest. If not, restore old design.
+
+### 3rd
+
+- [x] Writing Resume (Good enough for assessment)
+- [x] Manage Green Account, create Doda, Type Account.
+- [ ] Apply for 10 companies via Green & others.
+
+### 4th~
+
+- [ ] Instant Filter Buttons / Drop Down Menu of Button (Filters) for Topics, Points & Comments
+  - Genre
+  - Latest / Oldest
+  - Most Viewed
+  - Most Rated
+- [ ] Image Upload and Display in Points (react-image-lightbox).
+- [ ] User Login popup form accessible from header. Syncronous.
+- [ ] User Tags & Profile Pic Feature
+- [ ] Styling User Related Pages.
+- [ ] Error Handling (Modal Prompts)
+
+- [ ] 就活資料動画を視聴。
+- [ ] Apply for 20 companies
+
+### N/A
+
+- [ ] Sort & Organize Tuts Videos ("Tutorial Library (latest)" ← "2.8 & EEVEE Training Project")
+- [ ] Relearn Blender 2.8 / 2.9 and create parametric, generative and seamless background graphics for website.
+- [ ] Go through the Intro Playlist
+- Some Plugins/Softwares:
+  - Jsplacement
+  - Sverchok
+  - Geometry Nodes
+  - Tissue
+  - By-Gen
+  - Nebula Generator
+- [ ] Implement on project and deploy.
+- [ ] Integrating 3D in React through 2 methods:
+  - [ ] Google model viewer
+  - [ ] React Three Fibre
+- [ ] And make a decision on which is a better method unless there's a usecase for both on the same page.
+- [ ] Implement and Deploy
+
+=======
 ## Temp
 
 - [ ] Update README
@@ -13,7 +70,6 @@
 - [x] Temporarily set top page to topics
 
 - [ ] Basic Touch Ups
-- [ ] Extra Features
 
 ## Setup
 

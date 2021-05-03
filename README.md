@@ -1,8 +1,9 @@
 # README
 
-## Heroku Link
+### Heroku Link
 
-https://nebulus-app.herokuapp.com/
+https://nebulus-app.herokuapp.com/  
+(※ Chrome 推奨、現在 PC のみ対応。)
 
 # Table Design
 

@@ -21,7 +21,10 @@ const Point = (props) => {
   const [rating, setRating] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
+  const [views, setViews] = useState(0);
+  const [viewSetPermit, setViewSetPermit] = useState(false);
   const [submitPermit, setSubmitPermit] = useState(false);
+  const [submitPermitView, setSubmitPermitView] = useState(false);
   const [userRating, setUserRating] = useState({});
   const [progress, setProgress] = useState(0);
 
@@ -38,6 +41,7 @@ const Point = (props) => {
     setProgress(30);
     const pointId = props.match.params.id;
     const pointUrl = `/api/v1/points/${pointId}`;
+
     axios
       .get(pointUrl)
       .then((resp) => {
@@ -51,9 +55,11 @@ const Point = (props) => {
         setPointShow(resp.data);
         setComments(commentsResp);
         setLoaded(true);
+        setViews(resp.data.data.attributes.views + 1);
+        setViewSetPermit(true);
 
         // If logged in, find rating record belonging to user.
-        if (loginStatus == "true") {
+        if (loginStatus === "true") {
           var userRate = ratingsResp.find(
             (c) => c.attributes.user_id == loginId
           );
@@ -62,6 +68,7 @@ const Point = (props) => {
           console.log("Not Logged in");
           var userRate = undefined;
         }
+
         setUserRating(userRate);
         console.log("Then response: ", resp);
         console.log("Point Owner: ", resp.data.data.attributes.user.username);
@@ -80,14 +87,60 @@ const Point = (props) => {
       .catch((resp) => console.log(resp));
   }, []);
 
+  // -------------------------- Add View Count ---------------------------------------
+
+  if (viewSetPermit === true) {
+    console.log("Viewed Once, count: ", views);
+    setPoint(
+      Object.assign({}, point, {
+        views: views,
+      })
+    );
+    setViewSetPermit(false);
+    setSubmitPermitView(true);
+  } else {
+    //
+  }
+
+  if (loginStatus === "true" && submitPermitView === true) {
+    console.log("New Views: ", point);
+
+    const csrfToken = document.querySelector("[name=csrf-token]").content;
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
+
+    const point_id = pointShow.data.id;
+    axios
+      .patch(`/api/v1/points/${point_id}`, { point })
+      .then((resp) => {
+        console.log(resp);
+        setPoint({});
+      })
+      .catch((resp) => {
+        console.log(resp);
+      });
+
+    setSubmitPermitView(false);
+  } else {
+    //
+  }
+
   // -------------------------- Edit/Delete Comment handlers ---------------------------
 
   const handleCommentChange = (e) => {
     e.preventDefault();
 
+    const commentId = e.target.getAttribute("data-id");
+    const maxLength = e.target.getAttribute("maxlength");
+    const counter = document.querySelector(".edit-comment-count");
+    const field = document.getElementById(`edit-text-${commentId}`);
+
     setComment(Object.assign({}, comment, { [e.target.name]: e.target.value }));
 
-    console.log("Edit Comment: ", comment);
+    let remaining = maxLength - field.value.length;
+    counter.innerHTML = `${remaining} Char Left`;
+
+    // console.log("Edit Comment: ", comment);
+    // console.log("id: ", maxLength);
   };
 
   const handleCommentSubmit = (e) => {
@@ -149,10 +202,6 @@ const Point = (props) => {
 
     const commentId = e.target.getAttribute("data-id");
     const targetComment = document.getElementById(`comment-${commentId}`);
-    const targetText = document.getElementById(`comment-text-${commentId}`);
-    const field = document.getElementById(`edit-text-${commentId}`);
-
-    field.value = targetText.innerHTML;
 
     for (var i = 0; i <= 5; i++) {
       targetComment.children[i].style.display = "none";
@@ -292,7 +341,9 @@ const Point = (props) => {
               placeholder="Max Char Length 300"
               onChange={handleCommentChange}
               className="comment-field"
+              defaultValue={item.attributes.text}
               id={`edit-text-${item.id}`}
+              data-id={item.id}
             />
             <div className="comment-edit-buttons">
               <button
@@ -309,6 +360,7 @@ const Point = (props) => {
               >
                 Cancel
               </button>
+              <p className="edit-comment-count"></p>
             </div>
           </form>
         </div>
@@ -319,8 +371,16 @@ const Point = (props) => {
   // -------------------------- New Comment handlers --------------------------
   const handleChange = (e) => {
     e.preventDefault();
+
+    const counter = document.querySelector(".new-comment-count");
+    const field = document.querySelector(".comment-field");
+    const maxLength = field.getAttribute("maxlength");
+
     setComment(Object.assign({}, comment, { [e.target.name]: e.target.value }));
-    console.log("Comment: ", comment);
+    // console.log("Comment: ", comment);
+
+    let remaining = maxLength - field.value.length;
+    counter.innerHTML = `${remaining} Char Left`;
   };
 
   const handleSubmit = (e) => {
@@ -734,6 +794,9 @@ const Point = (props) => {
   const charCountTit = document.getElementById("title");
   const charCountArg = document.getElementById("argument");
 
+  // const charCountText = document.getElementById("text");
+  // console.log("comment form: ", charCountText.value);
+
   // Array Math Test
   // const arrayOne = [5, 5, 5];
   // const arrayTwo = [5, 5, 5];
@@ -764,6 +827,10 @@ const Point = (props) => {
           <p className="point-date">
             Posted{" "}
             {new Date(pointShow.data.attributes.created_at).toDateString()}
+          </p>
+
+          <p className="point-count">
+            Access Count: {pointShow.data.attributes.views}
           </p>
 
           {/* Edit/Delete Point Options */}
@@ -872,6 +939,7 @@ const Point = (props) => {
               <button type="submit" className="comment-submit">
                 Post
               </button>
+              <p className="new-comment-count"></p>
             </form>
           </div>
         )}
@@ -893,10 +961,9 @@ const Point = (props) => {
             maxLength="150"
             onChange={handleEditChange}
             className="point-form-title"
+            defaultValue={pointShow.data.attributes.title}
             id="title"
-          >
-            {pointShow.data.attributes.title}
-          </textarea>
+          />
 
           <input
             name="position"
@@ -910,6 +977,7 @@ const Point = (props) => {
               name="markdown"
               onChange={handleEditChange}
               className="select-format"
+              defaultValue={pointShow.data.attributes.markdown}
               id="select-f"
             >
               <option value={null}>--</option>
@@ -923,10 +991,9 @@ const Point = (props) => {
             maxLength="5000"
             onChange={handleEditChange}
             className="point-form-argument"
+            defaultValue={pointShow.data.attributes.argument}
             id="argument"
-          >
-            {pointShow.data.attributes.argument}
-          </textarea>
+          />
 
           <ul className="point-field-counts">
             <li>

@@ -13,11 +13,16 @@ import gfm from "remark-gfm";
 import LoadingBar from "react-top-loading-bar";
 
 const Topic = (props) => {
+  const [showTopic, setShowTopic] = useState({});
   const [topic, setTopic] = useState({});
   const [points, setPoints] = useState([]);
   const [point, setPoint] = useState({});
+  const [tags, setTags] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
+  const [views, setViews] = useState(0);
+  const [viewSetPermit, setViewSetPermit] = useState(false);
+  const [submitPermitView, setSubmitPermitView] = useState(false);
   const [progress, setProgress] = useState(0);
 
   const userPresence = document.querySelector(".user-presence");
@@ -28,15 +33,28 @@ const Topic = (props) => {
     // Get Topic
     // Get Points
     setProgress(30);
+
     const topicId = props.match.params.id;
     const topicUrl = `/api/v1/topics/${topicId}`;
+
     axios
       .get(topicUrl)
       .then((resp) => {
-        setTopic(resp.data);
-        setPoints(resp.data.included);
+        const pointsResp = resp.data.included.filter((c) =>
+          c.type.includes("point")
+        );
+        const tagsResp = resp.data.included.filter((c) =>
+          c.type.includes("tag")
+        );
+
+        setShowTopic(resp.data);
+        setPoints(pointsResp);
+        setTags(tagsResp);
         setLoaded(true);
+        setViews(resp.data.data.attributes.views + 1);
+        setViewSetPermit(true);
         setProgress(100);
+
         console.log("Then Response: ", resp);
       })
       .catch((resp) => {
@@ -44,8 +62,46 @@ const Topic = (props) => {
       });
   }, [points.length]);
 
+  // -------------------------- Add View Count ---------------------------------------
+
+  if (viewSetPermit === true) {
+    console.log("Viewed Once, count: ", views);
+    setTopic(
+      Object.assign({}, topic, {
+        views: views,
+      })
+    );
+    setViewSetPermit(false);
+    setSubmitPermitView(true);
+  } else {
+    //
+  }
+
+  if (loginStatus === "true" && submitPermitView === true) {
+    console.log("New Views: ", topic);
+
+    const csrfToken = document.querySelector("[name=csrf-token]").content;
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
+
+    const topic_id = showTopic.data.id;
+    axios
+      .patch(`/api/v1/topics/${topic_id}`, { topic })
+      .then((resp) => {
+        console.log(resp);
+        setTopic({});
+      })
+      .catch((resp) => {
+        console.log(resp);
+      });
+
+    setSubmitPermitView(false);
+  } else {
+    //
+  }
+
   const proPoint = [];
   const conPoint = [];
+
   points.forEach((point) => {
     point.attributes.position === true
       ? proPoint.push(point)
@@ -71,6 +127,12 @@ const Topic = (props) => {
           {item.attributes.user.username}
         </li>
         <li
+          className={`point-count pro-${proPoint.indexOf(item)}`}
+          key={`pro-count-${item.id}`}
+        >
+          {`Access Count: ${item.attributes.views}`}
+        </li>
+        <li
           className={`point-date pro-${proPoint.indexOf(item)}`}
           key={`pro-date-${item.id}`}
         >
@@ -93,13 +155,19 @@ const Topic = (props) => {
           <Link to={`/points/${item.id}`}>{item.attributes.title}</Link>
         </li>
         <li
-          className={`point-user con-${conPoint.indexOf(item) + 10}`}
+          className={`point-user con-${conPoint.indexOf(item)}`}
           key={item.attributes.user.username}
         >
           {item.attributes.user.username}
         </li>
         <li
-          className={`point-date con-${conPoint.indexOf(item) + 10}`}
+          className={`point-count pro-${proPoint.indexOf(item)}`}
+          key={`pro-count-${item.id}`}
+        >
+          {`Access Count: ${item.attributes.views}`}
+        </li>
+        <li
+          className={`point-date con-${conPoint.indexOf(item)}`}
           key={`con-date-${item.id}`}
         >
           {`Posted On: ${new Date(item.attributes.created_at).toDateString()}`}
@@ -107,6 +175,15 @@ const Topic = (props) => {
       </ul>
     );
   });
+
+  // let pros = null;
+  // let cons = null;
+  // if (points.length > 0) {
+
+  // } else {
+  //   pros = <h1>No Points</h1>;
+  //   cons = <h1>No Points</h1>;
+  // }
 
   // -------------------------- New Point Handlers --------------------------
   const handleChange = (e) => {
@@ -119,7 +196,7 @@ const Topic = (props) => {
     e.preventDefault();
     const csrfToken = document.querySelector("[name=csrf-token]").content;
     axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
-    const topic_id = topic.data.id;
+    const topic_id = showTopic.data.id;
     axios
       .post("/api/v1/points", { point, topic_id })
       .then((resp) => {
@@ -153,15 +230,25 @@ const Topic = (props) => {
     const csrfToken = document.querySelector("[name=csrf-token]").content;
     axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
 
-    const topic_id = topic.data.id;
+    const topic_id = showTopic.data.id;
     const editForm = document.querySelector(".topic-form");
     const penIcon = document.querySelector(".topic-edit");
+    const targetTitle = document.querySelector(".topic-title");
+    const targetDesc = document.querySelector(".topic-description");
+    const targetPro = document.querySelector(".pro");
+    const targetCon = document.querySelector(".con");
 
     axios
       .patch(`/api/v1/topics/${topic_id}`, { topic })
       .then((resp) => {
-        console.log(resp);
+        console.log("New Topic: ", resp.data);
         setTopic(resp.data);
+
+        targetTitle.innerHTML = resp.data.data.attributes.title;
+        targetDesc.innerHTML = resp.data.data.attributes.description;
+        targetPro.innerHTML = resp.data.data.attributes.pro;
+        targetCon.innerHTML = resp.data.data.attributes.con;
+
         editForm.classList.remove("formContent");
         editForm.style.display = "none";
         penIcon.style.display = null;
@@ -177,7 +264,7 @@ const Topic = (props) => {
     const csrfToken = document.querySelector("[name=csrf-token]").content;
     axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
 
-    const topic_id = topic.data.id;
+    const topic_id = showTopic.data.id;
 
     axios
       .delete(`/api/v1/topics/${topic_id}`)
@@ -269,14 +356,9 @@ const Topic = (props) => {
   const showEditForm = (e) => {
     e.preventDefault();
     const editForm = document.querySelector(".topic-form");
-    const formPro = document.getElementById("pro");
-    const formCon = document.getElementById("con");
     const penIcon = document.querySelector(".topic-edit");
 
     penIcon.style.display = "none";
-
-    formPro.value = topic.data.attributes.pro;
-    formCon.value = topic.data.attributes.con;
 
     editForm.style.display = "grid";
     editForm.classList.add("formContent");
@@ -331,9 +413,12 @@ const Topic = (props) => {
 
         {/* Topic Content/Info */}
         <div className="topic-head">
-          <h2 className="topic-title">{topic.data.attributes.title}</h2>
+          <h2 className="topic-title">{showTopic.data.attributes.title}</h2>
+          <p className="topic-count">
+            Access Count: {showTopic.data.attributes.views}
+          </p>
           <p className="topic-description">
-            {topic.data.attributes.description}
+            {showTopic.data.attributes.description}
           </p>
 
           {/* Re-display or Close Point Form */}
@@ -354,14 +439,14 @@ const Topic = (props) => {
               className="add-point"
             />
           )}
-          {topic.data.attributes.user.id == loginId && (
+          {showTopic.data.attributes.user.id == loginId && (
             <FontAwesomeIcon
               icon={faPenSquare}
               className="topic-edit"
               onClick={showEditForm}
             />
           )}
-          {topic.data.attributes.user.id == loginId && (
+          {showTopic.data.attributes.user.id == loginId && (
             <FontAwesomeIcon
               icon={faTrashAlt}
               className="topic-delete"
@@ -372,12 +457,12 @@ const Topic = (props) => {
 
         {/* Pro & Con Points Section */}
         <div className="pro-shell">
-          <p className="pro">{topic.data.attributes.pro}</p>
+          <p className="pro">{showTopic.data.attributes.pro}</p>
           <div className="pro-container">{pros}</div>
         </div>
 
         <div className="con-shell">
-          <p className="con">{topic.data.attributes.con}</p>
+          <p className="con">{showTopic.data.attributes.con}</p>
           <div className="con-container">{cons}</div>
         </div>
 
@@ -401,8 +486,8 @@ const Topic = (props) => {
               id="select-p"
             >
               <option value={null}>--</option>
-              <option value={true}>{topic.data.attributes.pro}</option>
-              <option value={false}>{topic.data.attributes.con}</option>
+              <option value={true}>{showTopic.data.attributes.pro}</option>
+              <option value={false}>{showTopic.data.attributes.con}</option>
             </select>
           </div>
 
@@ -472,10 +557,9 @@ const Topic = (props) => {
             placeholder="Topic Title: Max Char Length 200"
             onChange={handleEditChange}
             className="topic-form-title"
+            defaultValue={showTopic.data.attributes.title}
             id="title"
-          >
-            {topic.data.attributes.title}
-          </textarea>
+          />
 
           <textarea
             name="description"
@@ -483,10 +567,9 @@ const Topic = (props) => {
             placeholder="Describe Topic: Max Char Length 500"
             onChange={handleEditChange}
             className="topic-form-description"
+            defaultValue={showTopic.data.attributes.description}
             id="description"
-          >
-            {topic.data.attributes.description}
-          </textarea>
+          />
 
           <input
             type="text"
@@ -494,7 +577,8 @@ const Topic = (props) => {
             maxLength="30"
             placeholder="Pro Position Name"
             onChange={handleEditChange}
-            className="topic-form-position"
+            className="topic-form-position-pro"
+            defaultValue={showTopic.data.attributes.pro}
             id="pro"
           />
 
@@ -504,7 +588,8 @@ const Topic = (props) => {
             maxLength="30"
             placeholder="Con Position Name"
             onChange={handleEditChange}
-            className="topic-form-position"
+            className="topic-form-position-con"
+            defaultValue={showTopic.data.attributes.con}
             id="con"
           />
 
