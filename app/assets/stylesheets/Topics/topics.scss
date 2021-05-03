@@ -1,15 +1,8 @@
-$topics-v: 2;
-$topics-v-hops: 4;
-
-$topics-h: 5;
-$topics-h-hops: 3;
-
 .topics-shell {
   min-height: 95vh;
   max-height: auto;
   width: 100vw;
-  background-image: url("https://cdn.wallpapersafari.com/76/36/NYExkS.jpg");
-  // background-size: auto 130%;
+  background-image: url("vector-abstract-geometric-seamless-pattern_edit.png");
   display: grid;
   grid-template-columns: repeat(15, 1fr);
   grid-template-rows: repeat(auto, 1fr);
@@ -17,8 +10,6 @@ $topics-h-hops: 3;
   .topics-loading {
     color: #ffffff;
     font-size: 2em;
-    grid-column: 8 / span 1;
-    grid-row: 1;
     justify-self: center;
     align-self: center;
   }
@@ -26,7 +17,6 @@ $topics-h-hops: 3;
   .loading-shell {
     width: fit-content;
     height: 120px;
-    // border: 1px solid white;
     margin: 10px;
     grid-column: 8 / span 1;
     grid-row: 1 / span 2;
@@ -54,6 +44,7 @@ $topics-h-hops: 3;
       width: 8px;
       height: 10%;
       margin: 0 6px 0 6px;
+      border: 1.5px solid rgba($color: #383838, $alpha: 1);
       border-radius: 10px;
       background-image: linear-gradient(
         0deg,
@@ -87,25 +78,54 @@ $topics-h-hops: 3;
     }
   }
 
+  .content-space {
+    height: fit-content;
+    width: fit-content;
+    padding: 10px;
+    background-color: rgba($color: #000000, $alpha: 0.6);
+    grid-row: 3 / span 10;
+    grid-column: 6 / span 5;
+    justify-self: center;
+    display: grid;
+    grid-auto-flow: row;
+  }
+
   .topic-center {
     width: fit-content;
     height: fit-content;
-    grid-column: 8 / span 1;
-    grid-row: 3 / span 6;
-    margin: 50px 10px 0 10px;
+    align-self: center;
     justify-self: center;
     display: flex;
     flex-direction: column;
   }
+
+  .core-content {
+    height: fit-content;
+    width: fit-content;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(2, fit-content);
+  }
+
+  // .topics-title {
+  //   color: white;
+  //   filter: blur(0.3px);
+  //   font-family: "nazalization";
+  //   font-size: 5em;
+  //   writing-mode: vertical-rl;
+  //   text-orientation: upright;
+  //   transform: translateY(50px);
+  //   opacity: 0;
+  //   animation: titleFade 0.5s forwards;
+  // }
 
   .topics-title {
     color: white;
     filter: blur(0.3px);
     font-family: "nazalization";
     font-size: 5em;
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    grid-row: 1 / span 2;
+    writing-mode: horizontal-tb;
+    text-orientation: sideways;
     transform: translateY(50px);
     opacity: 0;
     animation: titleFade 0.5s forwards;
@@ -116,7 +136,6 @@ $topics-h-hops: 3;
     height: 60px;
     text-align: center;
     color: #ffffff;
-    grid-row: 2;
     transition: color 0.3s;
     margin-top: 20px;
     transform: translateY(50px);
@@ -135,28 +154,19 @@ $topics-h-hops: 3;
   .topics {
     height: fit-content;
     width: fit-content;
-    grid-row: $topics-v / span 10;
     justify-self: center;
-
+    padding: 15px;
     display: grid;
     gap: 0.5em;
     margin-top: 50px;
     box-sizing: border-box;
   }
 
-  .one {
-    grid-column: $topics-h / span $topics-h-hops;
-  }
-
-  .two {
-    grid-column: ($topics-h + $topics-h-hops + 1) / span $topics-h-hops;
-  }
-
   .topic-form-shell {
     max-height: 700px;
     width: 1vw;
     grid-column: 1;
-    grid-row: 1 / span 6;
+    grid-row: 1 / span 5;
     margin-top: 50px;
     display: none;
     grid-template-rows: repeat(3, 1fr);
@@ -204,7 +214,7 @@ $topics-h-hops: 3;
       justify-self: center;
       align-self: center;
       display: grid;
-      grid-template-rows: repeat(6, fit-content);
+      grid-template-rows: repeat(7, fit-content);
     }
 
     $input-background: rgba(
@@ -286,6 +296,66 @@ $topics-h-hops: 3;
       }
     }
 
+    .tags-field-shell {
+      width: fit-content;
+      height: fit-content;
+      margin-top: 10px;
+      background-color: rgba($color: #000000, $alpha: 0.5);
+      border-radius: 5px;
+    }
+
+    .tags-input {
+      width: 200px;
+      height: 30px;
+      border: none;
+      border-radius: 5px;
+      padding-left: 10px;
+      margin: 5px 3px 5px 3px;
+    }
+
+    .tagSpace,
+    .tag-search-result {
+      width: fit-content;
+      height: fit-content;
+      display: flex;
+    }
+
+    .tagSpace {
+      flex-direction: row;
+    }
+
+    .tag-search-result {
+      flex-direction: column;
+    }
+
+    .newTag,
+    .search-result {
+      background-color: rgba($color: #ffffff, $alpha: 0.5);
+      padding: 3px;
+      margin: 3px;
+      height: fit-content;
+      font-family: "quicksand";
+      font-size: 1.5em;
+      font-weight: bolder;
+    }
+
+    .newTag {
+      width: fit-content;
+      border-radius: 5px;
+    }
+
+    .search-result {
+      width: 200px;
+      border-bottom: 2px solid rgba($color: #2b2b2b, $alpha: 1);
+    }
+
+    .delete-tag {
+      height: 13px;
+      width: 13px;
+      margin-left: 3px;
+      align-self: center;
+    }
+
     .topic-submit {
       height: 80px;
       background-color: $input-background;
@@ -293,7 +363,7 @@ $topics-h-hops: 3;
       border-radius: 5px;
       border: none;
       margin-top: 20px;
-      grid-row: 6;
+      grid-row: 7;
       grid-column: 1 / span 2;
       align-self: start;
       font-size: 2em;
@@ -305,14 +375,15 @@ $defSeconds: 0.1s;
 @for $i from 0 through 100 {
   $seconds: $defSeconds * ($i + 1);
   .topic-#{$i} {
+    height: fit-content;
+    width: fit-content;
+    min-width: min-content;
     background-color: rgba($color: #000000, $alpha: 0.4);
     box-shadow: 0 0 10px rgba($color: #d8d8d8, $alpha: 0.8);
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 1em;
-    height: fit-content;
-    width: fit-content;
-    min-width: min-content;
+    justify-self: center;
     display: grid;
     grid-template-columns: repeat(2, fit-content);
     grid-template-rows: repeat(3, 1fr);

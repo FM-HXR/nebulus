@@ -577,7 +577,7 @@ const Topic = (props) => {
             maxLength="30"
             placeholder="Pro Position Name"
             onChange={handleEditChange}
-            className="topic-form-position"
+            className="topic-form-position-pro"
             defaultValue={showTopic.data.attributes.pro}
             id="pro"
           />
@@ -588,7 +588,7 @@ const Topic = (props) => {
             maxLength="30"
             placeholder="Con Position Name"
             onChange={handleEditChange}
-            className="topic-form-position"
+            className="topic-form-position-con"
             defaultValue={showTopic.data.attributes.con}
             id="con"
           />
