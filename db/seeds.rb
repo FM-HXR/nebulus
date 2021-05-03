@@ -24,7 +24,7 @@ while i <= 20
  hash[:description] = "Beef ball prosciutto shank leberkas pork beef leberkas filet andouille mignon venison."
  hash[:pro] = "pro"
  hash[:con] = "con"
- hash[:category] = r.rand(0...7)
+ hash[:category] = r.rand(1...6)
  hash[:views] = 0
  hash[:user] = users.first
  topic_list << hash

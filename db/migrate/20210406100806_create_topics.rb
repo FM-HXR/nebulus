@@ -7,7 +7,7 @@ class CreateTopics < ActiveRecord::Migration[6.1]
       t.string :pro, null: false
       t.string :con, null: false
       t.integer :category, null: false, default: 0
-      t.integer :views, null: false, default: 0
+      t.integer :views, null:false, default: 0
       t.belongs_to :user, null: false, foreign_key: true
       t.timestamps
     end

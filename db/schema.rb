@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 2021_04_22_144125) do
     t.string "pro", null: false
     t.string "con", null: false
     t.integer "category", default: 0, null: false
-    t.integer "views", default: 0, null: false
+    t.integer "views", default: 0
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

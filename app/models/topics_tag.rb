@@ -11,6 +11,7 @@ class TopicsTag
       tag.save
       TopicTagRelation.create(tag_id: tag.id, topic_id: topic.id)
     end
+    # TopicSerializer.new(topic, options)
   end
 
   # params => :topic_id names:[] user_id: current_user.id
@@ -31,4 +32,8 @@ class TopicsTag
     relation = TopicTagRelation.where(tag_id: tag_id, topic_id: topic_id)
     relation.destroy_all
   end
+
+  # def options
+  #   @options ||= { include: %i[tags] }
+  # end 
 end 
