@@ -22,8 +22,6 @@ const Topics = () => {
   const [topics, setTopics] = useState([]);
   const [topics_tag, setTopicsTag] = useState({});
   const [tags, setTags] = useState([]);
-  const [searching, setSearching] = useState(false);
-  const [query, setQuery] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [tagParams, setTagParams] = useState(false);
   const [submitTags, setSubmitTags] = useState([]);
@@ -36,6 +34,8 @@ const Topics = () => {
 
   // -------------------------- Use Effect ------------------------------
   useEffect(() => {
+    const title = document.querySelector(".topic-center");
+    const centerText = document.querySelector(".topics-title");
     // Get Topics from API
     // Get Login Boolean
     // Update Topics in state
@@ -44,8 +44,16 @@ const Topics = () => {
       .get("/api/v1/topics.json")
       .then((resp) => {
         setTopics(resp.data.data);
-        setLoaded(true);
-        setProgress(100);
+        title.classList.add("title-fade-out");
+
+        setTimeout(() => {
+          setLoaded(true);
+          setProgress(100);
+          title.classList.remove("title-fade-out");
+          centerText.classList.add("topics-title-two");
+          centerText.classList.remove("topics-title");
+        }, 500);
+
         console.log("Topics resp: ", resp);
       })
       .catch((resp) => console.log(resp));
@@ -59,7 +67,7 @@ const Topics = () => {
       .catch((resp) => {
         console.log(resp);
       });
-  }, [topics.length]);
+  }, []);
 
   // -------------------------- Category Icons & Form Options -----------------------------------
   // Misc, Economics & Finance, Politics & Society, Philosophy, Pop Culture, Science & Math, History
@@ -140,16 +148,26 @@ const Topics = () => {
   // -------------------------- Split Topics to 2 columns --------------------------------------------
 
   const topicCount = topics.length;
-  const topicHalf = Math.floor(topicCount / 2) - 1;
+  const topicQuarter = Math.round(topicCount / 4);
   const listOne = [];
   const listTwo = [];
+  const listThree = [];
+  const listFour = [];
 
-  for (var i = 0; i <= topicHalf; i++) {
+  for (var i = 0; i <= topicQuarter - 1; i++) {
     listOne.push(list[i]);
   }
 
-  for (var i = topicHalf + 1; i <= topicCount - 1; i++) {
+  for (var i = topicQuarter; i <= topicQuarter * 2 - 1; i++) {
     listTwo.push(list[i]);
+  }
+
+  for (var i = topicQuarter * 2; i <= topicQuarter * 3 - 1; i++) {
+    listThree.push(list[i]);
+  }
+
+  for (var i = topicQuarter * 3; i <= topicCount; i++) {
+    listFour.push(list[i]);
   }
 
   // -------------------------- Add/Remove Tags Handler for Form --------------------------------------------
@@ -332,6 +350,13 @@ const Topics = () => {
     topicForm.style.display = "none";
   };
 
+  // const animTitle = (seconds) => {
+  //
+  //   setShow(true);
+  // };
+
+  // loaded && animTitle();
+
   // ----------------------------- Component ------------------------------------------
 
   return (
@@ -364,6 +389,8 @@ const Topics = () => {
         <div className="core-content">
           <div className="topics one">{loaded && listOne}</div>
           <div className="topics two">{loaded && listTwo}</div>
+          <div className="topics three">{loaded && listThree}</div>
+          <div className="topics four">{loaded && listFour}</div>
         </div>
       </div>
 
