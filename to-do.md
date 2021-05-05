@@ -3,27 +3,26 @@
 ### 3rd:
 
 - [x] Tagging feature for New Topics
-- [ ] Filtered Search Mode for Search Topics page
+- [x] Filtered Search Mode for Search Topics page
   - Full Text (Autocomplete suggestions)
   - Tags (Autocomplete suggestions)
-  - Genre
+  - Category
   - Latest / Oldest
   - Most Viewed
-  - Most Rated
-- [ ] Styling Search Page
-- [ ] Update ReadMe, learn how to write it effectively on Youtube.
-- [ ] Redesign theme starting with topics page and see how it goes.
+  - Most Argued
+- [x] Styling Search Page
+- [x] Update ReadMe, learn how to write it effectively on Youtube.
+- [x] Redesign theme starting with topics page and see how it goes.
   - If it's viable, do it for the rest. If not, restore old design.
 
 ### 3rd
 
 - [x] Writing Resume (Good enough for assessment)
 - [x] Manage Green Account, create Doda, Type Account.
-- [ ] Apply for 10 companies via Green & others.
 
 ### 4th~
 
-- [ ] Instant Filter Buttons / Drop Down Menu of Button (Filters) for Topics, Points & Comments
+- [x] Drop Down Menu of Button (Filters) for Topics, Points & Comments
   - Genre
   - Latest / Oldest
   - Most Viewed
@@ -35,6 +34,9 @@
 - [ ] Error Handling (Modal Prompts)
 
 - [ ] 就活資料動画を視聴。
+- [ ] Update CV on Green, Type and Doda
+- [ ] Apply for 10 companies via Green & others.
+- [ ] Reply to CA about potential job matches.
 - [ ] Apply for 20 companies
 
 ### N/A
@@ -57,6 +59,7 @@
 - [ ] Implement and Deploy
 
 =======
+
 ## Temp
 
 - [ ] Update README

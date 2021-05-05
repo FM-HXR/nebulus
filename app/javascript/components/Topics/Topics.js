@@ -350,13 +350,6 @@ const Topics = () => {
     topicForm.style.display = "none";
   };
 
-  // const animTitle = (seconds) => {
-  //
-  //   setShow(true);
-  // };
-
-  // loaded && animTitle();
-
   // ----------------------------- Component ------------------------------------------
 
   return (
