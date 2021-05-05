@@ -74,6 +74,7 @@ const Point = (props) => {
         console.log("Point Owner: ", resp.data.data.attributes.user.username);
         console.log("RatingResp: ", ratingsResp);
         console.log("userRate: ", userRate);
+        console.log("View Count: ", resp.data.data.attributes.views);
 
         if (userRate !== undefined) {
           var bulbInit = document.getElementById(
@@ -90,10 +91,10 @@ const Point = (props) => {
   // -------------------------- Add View Count ---------------------------------------
 
   if (viewSetPermit === true) {
-    console.log("Viewed Once, count: ", views);
     setPoint(
       Object.assign({}, point, {
         views: views,
+        user_id: pointShow.data.attributes.user.id,
       })
     );
     setViewSetPermit(false);
@@ -102,17 +103,22 @@ const Point = (props) => {
     //
   }
 
-  if (loginStatus === "true" && submitPermitView === true) {
-    console.log("New Views: ", point);
+  if (
+    submitPermitView === true &&
+    pointShow.data.attributes.user.id != loginId
+  ) {
+    const accessCounter = document.querySelector(".point-count");
 
     const csrfToken = document.querySelector("[name=csrf-token]").content;
     axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
 
     const point_id = pointShow.data.id;
     axios
-      .patch(`/api/v1/points/${point_id}`, { point })
+      .patch(`/api/v1/points/${point_id}/update_views`, { point })
       .then((resp) => {
+        console.log("View +1");
         console.log(resp);
+        accessCounter.innerHTML = `Access Count: ${point.views}`;
         setPoint({});
       })
       .catch((resp) => {
@@ -138,9 +144,6 @@ const Point = (props) => {
 
     let remaining = maxLength - field.value.length;
     counter.innerHTML = `${remaining} Char Left`;
-
-    // console.log("Edit Comment: ", comment);
-    // console.log("id: ", maxLength);
   };
 
   const handleCommentSubmit = (e) => {
@@ -830,7 +833,8 @@ const Point = (props) => {
           </p>
 
           <p className="point-count">
-            Access Count: {pointShow.data.attributes.views}
+            {pointShow.data.attributes.user.id == loginId &&
+              `Access Count: ${pointShow.data.attributes.views}`}
           </p>
 
           {/* Edit/Delete Point Options */}

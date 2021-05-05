@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
      resources :topics do
+        patch "/update_views/" => "topics#update_views" 
         collection do 
           post :add
           delete :remove
@@ -15,7 +16,9 @@ Rails.application.routes.draw do
           get :random
         end
      end
-     resources :points, only: [:create, :update, :destroy, :show]
+     resources :points, only: [:create, :update, :destroy, :show] do
+        patch "/update_views/" => "points#update_views"
+     end 
      resources :comments, only: [:create, :update, :destroy]
      resources :ratings, only: [:create, :update, :destroy]
      resources :tags, only: [:index]

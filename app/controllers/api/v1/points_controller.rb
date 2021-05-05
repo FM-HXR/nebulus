@@ -27,6 +27,15 @@ module Api
         end
       end
 
+      def update_views
+        point = Point.find(params[:point_id])
+        if point.update(view_update_params)
+          render json: PointSerializer.new(point).serialized_json
+        else
+          render json: {error: point.errors.full_messages}, status: 422
+        end
+      end
+
       def destroy
         point = Point.find(params[:id])
         if point.destroy
@@ -43,7 +52,11 @@ module Api
       end
     
       def point_params
-        params.require(:point).permit(:title, :position, :markdown, :argument, :bright, :dim, :dark, :views, :topic_id).merge(user_id: current_user.id)
+        params.require(:point).permit(:title, :position, :markdown, :argument, :bright, :dim, :dark, :topic_id).merge(user_id: current_user.id)
+      end
+
+      def view_update_params
+        params.require(:point).permit(:views, :user_id)
       end
 
       # Called as a method so not @options but options.

@@ -36,6 +36,15 @@ module Api
         end
       end 
 
+      def update_views
+        topic = Topic.find(params[:topic_id])
+        if topic.update(view_update_params)
+          render json: PointSerializer.new(topic).serialized_json
+        else
+          render json: {error: topic.errors.full_messages}, status: 422
+        end
+      end
+
       def add
         @topic = Topic.find(add_tag_params[:topic_id])
         if TopicsTag.add_tags(add_tag_params)
@@ -76,7 +85,11 @@ module Api
       private
 
       def topic_params
-        params.require(:topic).permit(:title, :description, :pro, :con, :category, :views).merge(user_id: current_user.id)
+        params.require(:topic).permit(:title, :description, :pro, :con, :category).merge(user_id: current_user.id)
+      end
+
+      def view_update_params
+        params.require(:topic).permit(:views, :user_id)
       end
 
       def topics_tag_params

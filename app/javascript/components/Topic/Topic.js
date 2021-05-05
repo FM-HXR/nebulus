@@ -65,10 +65,10 @@ const Topic = (props) => {
   // -------------------------- Add View Count ---------------------------------------
 
   if (viewSetPermit === true) {
-    console.log("Viewed Once, count: ", views);
     setTopic(
       Object.assign({}, topic, {
         views: views,
+        user_id: showTopic.data.attributes.user.id,
       })
     );
     setViewSetPermit(false);
@@ -77,17 +77,22 @@ const Topic = (props) => {
     //
   }
 
-  if (loginStatus === "true" && submitPermitView === true) {
-    console.log("New Views: ", topic);
+  if (
+    submitPermitView === true &&
+    showTopic.data.attributes.user.id != loginId
+  ) {
+    const accessCounter = document.querySelector(".topic-count");
 
     const csrfToken = document.querySelector("[name=csrf-token]").content;
     axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
 
     const topic_id = showTopic.data.id;
     axios
-      .patch(`/api/v1/topics/${topic_id}`, { topic })
+      .patch(`/api/v1/topics/${topic_id}/update_views`, { topic })
       .then((resp) => {
+        console.log("View +1");
         console.log(resp);
+        accessCounter.innerHTML = `Access Count: ${topic.views}`;
         setTopic({});
       })
       .catch((resp) => {
@@ -415,7 +420,8 @@ const Topic = (props) => {
         <div className="topic-head">
           <h2 className="topic-title">{showTopic.data.attributes.title}</h2>
           <p className="topic-count">
-            Access Count: {showTopic.data.attributes.views}
+            {showTopic.data.attributes.user.id == loginId &&
+              `Access Count: ${showTopic.data.attributes.views}`}
           </p>
           <p className="topic-description">
             {showTopic.data.attributes.description}
