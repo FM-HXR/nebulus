@@ -1,43 +1,31 @@
 # Dev procedures
 
-### 3rd:
+### 6th~
 
-- [x] Tagging feature for New Topics
-- [x] Filtered Search Mode for Search Topics page
-  - Full Text (Autocomplete suggestions)
-  - Tags (Autocomplete suggestions)
-  - Category
-  - Latest / Oldest
-  - Most Viewed
-  - Most Argued
-- [x] Styling Search Page
-- [x] Update ReadMe, learn how to write it effectively on Youtube.
-- [x] Redesign theme starting with topics page and see how it goes.
-  - If it's viable, do it for the rest. If not, restore old design.
-
-### 3rd
-
-- [x] Writing Resume (Good enough for assessment)
-- [x] Manage Green Account, create Doda, Type Account.
-
-### 4th~
-
-- [x] Drop Down Menu of Button (Filters) for Topics, Points & Comments
-  - Genre
-  - Latest / Oldest
-  - Most Viewed
-  - Most Rated
-- [ ] Image Upload and Display in Points (react-image-lightbox).
-- [ ] User Login popup form accessible from header. Syncronous.
-- [ ] User Tags & Profile Pic Feature
+- [ ] Change background image for topic & point.
+- [ ] Edit Tags on Topic, redesign form.
+  - [ ] "Hide Form" => "Hide / Close Form"
+  - [ ] Redesign buttons.
+- [ ] Pop up window from header for login (custom javascript)
+- [ ] Adding tags for users
+- [ ] User Profile Pic Feature
+- [ ] User profile page
+- [ ] Update / Delete User
 - [ ] Styling User Related Pages.
+- [ ] Filter buttons for Topics page
+  - For You
+  - Latest/Oldest
+  - Categories
+  - Tags
+  - Most Viewed or Argued
+- [ ] Image Upload and Display in Points (react-image-lightbox).
 - [ ] Error Handling (Modal Prompts)
+- [ ] Basic Touch Ups
 
 - [ ] 就活資料動画を視聴。
 - [ ] Update CV on Green, Type and Doda
 - [ ] Apply for 10 companies via Green & others.
 - [ ] Reply to CA about potential job matches.
-- [ ] Apply for 20 companies
 
 ### N/A
 
@@ -59,20 +47,6 @@
 - [ ] Implement and Deploy
 
 =======
-
-## Temp
-
-- [ ] Update README
-- [ ] Test Deployment to Heroku
-- [ ] Finishing Resume
-- [ ] Title Logo (Link)
-- [ ] change background to css generated background to avoid copyright
-- [ ] Link in Point and Topic that leads to upper layer
-- [ ] Solve problem of fonts not reflecting on heroku
-- [ ] User Login, Sign Up modals
-- [x] Temporarily set top page to topics
-
-- [ ] Basic Touch Ups
 
 ## Setup
 
@@ -132,13 +106,13 @@
 ## Extra Features (Not in order)
 
 - [x] Ratings for points
-- [ ] View count for topics & points.
-- [ ] Tags, topic_tag relations.
-- [ ] Category for topics.
-- [ ] Category Logo for Topic widgets in Topics
-- [ ] Search feature
-  - [ ] Full text search for topics
-  - [ ] Multiple Tags Search for topics
+- [x] View count for topics & points.
+- [x] Tags, topic_tag relations.
+- [x] Category for topics.
+- [x] Category Logo for Topic widgets in Topics
+- [x] Search feature
+  - [x] Full text search for topics
+  - [x] Multiple Tags Search for topics
 - [ ] Multiple Filters for...
 - Topics (Controller response based)
   - [ ] Newest / oldest
@@ -147,17 +121,13 @@
   - [ ] Most popular (total view count)
 - Topic (sort points by Attributes)
   - [ ] Newest / oldest
-  - [ ] Most popular (total rate count)
+  - [ ] Most Viewed
+  - [ ] Most Rated (total rate count)
 - Point (sort comments by Attributes)
   - [ ] Newest / oldest
   - [ ] Most Viewed
   - [ ] Most popular (total rate count)
 - [ ] Multiple Filter for points for each side
-
-  - [ ] Newest / oldest
-  - [ ] Most Viewed
-  - [ ] Most Rated (total rate count)
-
 - [ ] User Avatar
   - [ ] Show Avatar & User within widget on Topic & Point page
 - [ ] User Page + Edit/Delete
