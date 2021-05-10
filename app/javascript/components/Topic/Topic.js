@@ -18,6 +18,10 @@ const Topic = (props) => {
   const [points, setPoints] = useState([]);
   const [point, setPoint] = useState({});
   const [tags, setTags] = useState([]);
+  const [presentTags, setPresentTags] = useState([]);
+  const [searchResult, setSearchResult] = useState([]);
+  const [tagParams, setTagParams] = useState(false);
+  const [submitTags, setSubmitTags] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
   const [views, setViews] = useState(0);
@@ -49,16 +53,32 @@ const Topic = (props) => {
 
         setShowTopic(resp.data);
         setPoints(pointsResp);
-        setTags(tagsResp);
+        setPresentTags(tagsResp);
         setLoaded(true);
         setViews(resp.data.data.attributes.views + 1);
         setViewSetPermit(true);
         setProgress(100);
 
+        // tagsResp.forEach((item) => {
+        //   var tag = { name: item.attributes.name };
+        //   submitTags.push(tag);
+        // });
+
         console.log("Then Response: ", resp);
+        console.log("Topics Tags Resp: ", tagsResp);
       })
       .catch((resp) => {
         console.log((resp) => console.log("Catch Response: ", resp));
+      });
+
+    axios
+      .get("/api/v1/tags.json")
+      .then((resp) => {
+        setTags(resp.data.data);
+        console.log("Tags resp: ", resp);
+      })
+      .catch((resp) => {
+        console.log(resp);
       });
   }, [points.length]);
 
@@ -129,7 +149,7 @@ const Topic = (props) => {
           className={`point-user pro-${proPoint.indexOf(item)}`}
           key={item.attributes.user.username}
         >
-          {item.attributes.user.username}
+          <Link to={`#`}>{item.attributes.user.username}</Link>
         </li>
         <li
           className={`point-count pro-${proPoint.indexOf(item)}`}
@@ -163,7 +183,7 @@ const Topic = (props) => {
           className={`point-user con-${conPoint.indexOf(item)}`}
           key={item.attributes.user.username}
         >
-          {item.attributes.user.username}
+          <Link to={`#`}>{item.attributes.user.username}</Link>
         </li>
         <li
           className={`point-count pro-${proPoint.indexOf(item)}`}
@@ -399,10 +419,178 @@ const Topic = (props) => {
     warning.classList.remove("formContent");
   };
 
+  // -------------------------- Add/Remove Tags Handler for Form --------------------------------------------
+
+  const addTagHandler = (e) => {
+    // Searching through existing tags with input
+    if (e.target.value !== "") {
+      const tagSearch = tags.filter((c) =>
+        c.attributes.name.toLowerCase().includes(e.target.value.toLowerCase())
+      );
+      console.log("Results: ", tagSearch);
+      setSearchResult(tagSearch);
+    } else if (e.target.value === "") {
+      console.log("No Results.");
+      setSearchResult([]);
+    }
+
+    var filter = submitTags.filter(
+      (c) => c.name === e.target.value.split(",")[0]
+    );
+    console.log("matches: ", filter);
+
+    // Adding tags via comma
+    if (e.key === ",") {
+      if (e.target.value !== "" && filter.length === 0) {
+        var tag = { name: e.target.value.split(",")[0] };
+
+        setSubmitTags([...submitTags, tag]);
+        setTagParams(true);
+        setSearchResult([]);
+
+        e.target.value = "";
+      } else {
+        setSearchResult([]);
+        e.target.value = "";
+      }
+    }
+  };
+
+  const removeTagHandler = (indexToRemove) => {
+    // Finding the tag that matches passed index No. and excluding it from submission list
+    setSubmitTags(submitTags.filter((c) => c !== submitTags[indexToRemove]));
+    setTagParams(true);
+  };
+
+  const removeExistingTag = (indexToRemove, topicId, tagId) => {
+    // Finding the tag that matches passed index No. and excluding it from submission list
+    setPresentTags(presentTags.filter((c) => c !== presentTags[indexToRemove]));
+    const removeParam = { topic_id: topicId, tag_id: tagId };
+    // setTagParams(true);
+  };
+
+  // Add tag from suggestions by click event
+  const addTagByClick = (tagName) => {
+    const tagInputField = document.querySelector(".tags-input");
+
+    var filter = submitTags.filter((c) => c.name === tagName);
+    console.log("matches: ", filter);
+
+    if (filter.length === 0) {
+      var tag = { name: tagName };
+      setSubmitTags([...submitTags, tag]);
+      setTagParams(true);
+    }
+    setSearchResult([]);
+    tagInputField.value = "";
+  };
+
+  // Adding tags to topics_tag param
+  // if (tagParams === true) {
+  //   var tagParam = [];
+
+  //   submitTags.forEach((item) => {
+  //     tagParam.push(item.name);
+  //   });
+
+  //   setTopicsTag(Object.assign({}, topics_tag, { names: tagParam }));
+
+  //   setTagParams(false);
+  //   console.log("Tags: ", submitTags);
+  //   console.log("Topic Params: ", topics_tag);
+  // }
+
+  // ----------------------------- Existing Tags List Generator --------------------------------------------
+
+  const tagSelection = searchResult.map((item) => {
+    return (
+      <li
+        className={`search-result ${item.id}`}
+        key={`result-${item.id}`}
+        onClick={() => addTagByClick(item.attributes.name)}
+      >
+        <span>{item.attributes.name}</span>
+      </li>
+    );
+  });
+
+  // ----------------------------- Added Tags List Generator --------------------------------------------
+
+  const presentTagList = presentTags.map((item) => {
+    return (
+      <li
+        key={item.attributes.name}
+        className={`newTag ${item.attributes.name}`}
+        data-name={item.attributes.name}
+      >
+        <span key={`label-${item.attributes.name}`}>
+          {item.attributes.name}
+        </span>
+        <FontAwesomeIcon
+          icon={faTimes}
+          className="delete-tag"
+          key={`close-${item.attributes.name}`}
+          data-name={item.attributes.name}
+          onClick={() =>
+            removeExistingTag(
+              presentTags.indexOf(item),
+              showTopic.data.id,
+              item.id
+            )
+          }
+        />
+      </li>
+    );
+  });
+
+  const tagList = submitTags.map((item) => {
+    return (
+      <li
+        key={item.name}
+        className={`newTag ${item.name}`}
+        data-name={item.name}
+      >
+        <span key={`label-${item.name}`}>{item.name}</span>
+        <FontAwesomeIcon
+          icon={faTimes}
+          className="delete-tag"
+          key={`close-${item.name}`}
+          data-name={item.name}
+          onClick={() => removeTagHandler(submitTags.indexOf(item))}
+        />
+      </li>
+    );
+  });
+
   // -------------------------- Vars For Components --------------------------
 
   const charCountTit = document.getElementById("title");
   const charCountArg = document.getElementById("argument");
+
+  // -------------------------- Category Icons & Form Options -----------------------------------
+  // Misc, Economics & Finance, Politics & Society, Philosophy, Pop Culture, Science & Math, History
+
+  const options = [
+    "--",
+    "Misc",
+    "Economics",
+    "Politics",
+    "Philosophy",
+    "Pop Culture",
+    "Science & Math",
+    "History",
+  ];
+
+  const optionsList = options.map((item) => {
+    return (
+      <option
+        value={options.indexOf(item)}
+        key={`option-${options.indexOf(item)}`}
+      >
+        {item}
+      </option>
+    );
+  });
 
   // -------------------------- Component ------------------------------------
   return (
@@ -419,6 +607,9 @@ const Topic = (props) => {
         {/* Topic Content/Info */}
         <div className="topic-head">
           <h2 className="topic-title">{showTopic.data.attributes.title}</h2>
+          <p className="topic-owner">
+            {showTopic.data.attributes.user.username}
+          </p>
           <p className="topic-count">
             {showTopic.data.attributes.user.id == loginId &&
               `Access Count: ${showTopic.data.attributes.views}`}
@@ -498,7 +689,7 @@ const Topic = (props) => {
           </div>
 
           <button className="see-desc" onClick={hideForm}>
-            Hide Form
+            Hide/Close Form
           </button>
 
           <div className="point-form-format">
@@ -523,15 +714,15 @@ const Topic = (props) => {
             className="point-form-argument"
             id="argument"
           />
-          <ul className="point-field-counts">
-            <li>
+          <div className="point-field-counts">
+            <p>
               Title: {formOpen && 150 - charCountTit.value.length} Char Left
-            </li>
-            <li>
+            </p>
+            <p>
               Argument: {formOpen && 5000 - charCountArg.value.length} Char Left
-            </li>
+            </p>
             <button onClick={openPreview}>Markdown Preview</button>
-          </ul>
+          </div>
           <button type="submit" className="point-submit">
             Post
           </button>
@@ -599,9 +790,36 @@ const Topic = (props) => {
             id="con"
           />
 
+          <div className="topic-form-category">
+            <p className="category-label">Category</p>
+            <select
+              name="category"
+              onChange={handleEditChange}
+              className="select-category"
+              defaultValue={showTopic.data.attributes.category}
+              id="select-c"
+            >
+              {optionsList}
+            </select>
+          </div>
+
+          <div className="tags-field-shell">
+            <ul className="tagSpace">
+              {presentTagList} {tagList}
+            </ul>
+            <input
+              type="text"
+              placeholder="Tags (Hit comma to add Tag)"
+              className="tags-input"
+              onKeyUp={addTagHandler}
+            />
+            <ul className="tag-search-result">{tagSelection}</ul>
+          </div>
+
           <button type="submit" className="topic-submit">
             Post
           </button>
+
           <button className="close-edit-form" onClick={closeEditForm}>
             Close
           </button>

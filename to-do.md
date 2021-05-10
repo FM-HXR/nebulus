@@ -1,17 +1,18 @@
 # Dev procedures
 
-### 6th~
+### 9th~
 
 - [ ] Change background image for topic & point.
 - [ ] Edit Tags on Topic, redesign form.
-  - [ ] "Hide Form" => "Hide / Close Form"
-  - [ ] Redesign buttons.
+  - [x] "Hide Form" => "Hide / Close Form"
+  - [x] Redesign buttons.
+  - [ ] Edit Tags on topic form
 - [ ] Pop up window from header for login (custom javascript)
 - [ ] Adding tags for users
-- [ ] User Profile Pic Feature
-- [ ] User profile page
-- [ ] Update / Delete User
 - [ ] Styling User Related Pages.
+- [ ] User profile page
+- [ ] User Profile Pic Feature
+- [ ] Update / Delete User
 - [ ] Filter buttons for Topics page
   - For You
   - Latest/Oldest
@@ -22,10 +23,14 @@
 - [ ] Error Handling (Modal Prompts)
 - [ ] Basic Touch Ups
 
-- [ ] 就活資料動画を視聴。
-- [ ] Update CV on Green, Type and Doda
+- [x] Reply to CA regarding interview dates for job.
+- [x] Update CV on Green, Type and Doda based on completed CV.
+- [x] Reply to CA about potential job matches.
 - [ ] Apply for 10 companies via Green & others.
-- [ ] Reply to CA about potential job matches.
+- [ ] 志望動機文作成 (IIJ エンジニアリング)
+- [ ] 就活資料動画を視聴。
+- [ ] Haircut, wash long sleeves.
+- [ ] Prepare interview sheet (17th).
 
 ### N/A
 
@@ -135,8 +140,8 @@
 - [ ] 2 Factor Auth login
 - [ ] Enable Multiple Image Uploading for Point Form & preview thumb before posting.
 - [ ] Uploaded images gallery component/widget in point page.
-- [ ] Infinite loading for show topics
-- [ ] "Load More" component for points
+- [ ] "Load More" button for show topics
+- [ ] "Load More" button for points
 - [ ] Referencing other points in other topics as a link in references section (in points).
 
 ## Deployment & AWS, S3
